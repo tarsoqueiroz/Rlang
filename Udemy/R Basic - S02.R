@@ -286,6 +286,7 @@ tail(airmiles)
 summary(mtcars)
 plot(mtcars)
 
+airmiles
 hist(airmiles)
 head(mtcars)
 sum(mtcars$wt)
@@ -304,12 +305,38 @@ mtcars[c(2, 5, 8), 6]
 
 # Data import
 
+numbers = scan()
+# 1: 45
+# 2: 674
+# 3: 454
+# 4: 745
+# 5: 345
+# 6:
+characters = scan(what = "character")
+# 1: Hi
+# 2: test 
+# 3: names
+# 4: T
+# 5:
+
+charNums = scan(what = "character")
+
+#----------#
+# Class 16 #
+#----------#
+
+library(data.table)
+
+mydata = fread("./Udemy/Bug Frequency.csv")
+mydata
+
+df = fread("")
 
 
 
 
 #----------#
-# Class 16 #
+# Class 17 #
 #----------#
 
 
