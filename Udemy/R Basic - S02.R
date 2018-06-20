@@ -330,28 +330,89 @@ library(data.table)
 mydata = fread("./Udemy/Bug Frequency.csv")
 mydata
 
-df = fread("")
-
+df = fread("1	 China[note 4]	1,392,470,000	June 19, 2018	18.2%	[79]
+2	 India	1,333,250,000	June 19, 2018	17.5%	[80]
+           3	 United States	327,335,000	June 19, 2018	4.29%	[81]
+           4	 Indonesia	261,600,000	October 31, 2016	3.43%	[82]
+           5	 Pakistan	211,961,000	June 19, 2018	2.78%	[83]
+           6	 Brazil	209,203,000	June 19, 2018	2.74%	[84]
+           7	 Nigeria	188,500,000	October 31, 2016	2.47%	[85]
+           8	 Bangladesh	164,698,000	June 19, 2018	2.16%	[86]
+           9	 Russia[note 5]	146,773,226	June 1, 2017	1.92%	[87]
+           10	 Japan	126,670,000	September 1, 2017	1.66%	[88]")
+df
 
 
 
 #----------#
-# Class 17 #
+# Class 18 #
 #----------#
 
+# Graphs in R Base
 
+# 3 main data viz systems:
+# ggplot2, lattice and R Base
 
+# simple scatterplot
+x = 5:7
+y = 8:10
 
+# default plot output here is a scatterplot
+plot(x, y)
 
+# data is a time series, default here is line plot
+plot(lynx)
+lynx
 
+# title, color, title color, title magnification
+plot(lynx, main="Lynx Trappings", col="red", col.main=52, cex.main=1.5)
 
+# label names
+plot(lynx, ylab="Lynx Trappings", xlab="")
 
+# label orientation
+plot(lynx, ylab="Lynx Trappings", xlab="", las=2)
 
+# las - 0:3, scale orientation
 
+# changing the session parameter, 2*2 plot matrix
+par(mfrow=c(2,2), col.axis="red")
 
+plot(1:8, las=0, xlab="xlab", ylab="ylab", main="LAS = 0")
+plot(1:8, las=1, xlab="xlab", ylab="ylab", main="LAS = 1")
+plot(1:8, las=2, xlab="xlab", ylab="ylab", main="LAS = 2")
+plot(1:8, las=3, xlab="xlab", ylab="ylab", main="LAS = 3")
 
+#----------#
+# Class 19 #
+#----------#
 
+# color manipulation
+colors()
 
+# point symbol types
+?pch
+
+x=2:4
+plot(x, pch="c") # using letters as point symbols
+plot(x, pch=13) # using symbol nr 13
+
+# Line types
+par(mfrow=c(1,1), col.axis="black") # setting parameters
+library(plotrix) # add on package for "ablineclip",
+
+plot(1:7, ylab="", main="Line Types lty 0:6", xlab="")
+
+#----------#
+# Class 20 #
+#----------#
+.
+?rivers # 141 observations
+
+x = 1:141
+y = rivers
+plot(x, y, col="green", pch=20, main="Length of\nMajor N. American Rivers",
+     col.main="red", xlab="", ylab="length in miles")
 
 
 
