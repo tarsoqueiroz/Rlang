@@ -56,6 +56,44 @@ rm(x, m, k, amostrateste)
 save.image()
 save.image(file="./USP/R-Ecologia/sessao_R-elampago.RData")
 
+#
+# 4. Lendo Dados para Dentro do R: Formato CSV
+#
 
+cax = read.csv(file="./USP/R-Ecologia/Data/exemplo-caixeta.csv")
+cax
+head(cax)
+
+cax2 = read.csv(file="./USP/R-Ecologia/Data/exemplo-caixeta-2.csv", sep=";")
+cax2
+head(cax2)
+
+#
+# 5. Manipulando e Criando Variáveis
+#
+
+cax$local
+cax$cap
+
+pi
+head(cax)
+cax$dap = (cax$cap/10) / pi               # cálculo do DAP (cm) a partir do CAP (mm)
+cax$g = (pi/4) * (cax$dap/100)^2          # cálculo da área transversal (m2) a partir do DAP (cm)
+cax$vol.cilindrico = cax$g * (cax$h/10)   # cálculo do volume cilíndrico a partir da área transv. e da altura (dm)
+head(cax)
+
+#
+# 6. Descrevendo as Observações
+#
+
+cax$local
+table(cax$local)
+table(cax$local, cax$parcela)
+table( cax$especie, cax$local )
+
+barplot( table(cax$local) )
+
+barplot( table(cax$fuste) )
+plot( table(cax$fuste) )
 
 
