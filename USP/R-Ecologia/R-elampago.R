@@ -86,6 +86,7 @@ head(cax)
 # 6. Descrevendo as Observações
 #
 
+cax
 cax$local
 table(cax$local)
 table(cax$local, cax$parcela)
@@ -95,5 +96,107 @@ barplot( table(cax$local) )
 
 barplot( table(cax$fuste) )
 plot( table(cax$fuste) )
+
+par( mar=c(5,10,4,2) )                                                # Define margens do gráfico, aumentando a esquerda
+barplot(sort(table(cax$especie)), horiz=T, las=1, xlab="Abundância")  # Gráfico horizontal c/ nomes horizontais
+dev.off()                                                             # Fecha a janela gráfica
+
+dotchart( sort(table(cax$especie)), xlab="Abundância" )
+
+# Sumário de Variáveis
+
+summary(cax)
+summary(cax$dap)
+summary(cax$h)
+summary(cax$especie)
+
+# Estatísticas Descritivas:- O R também possui funções para as diversas estatísticas descritivas de variáveis quantitativas:
+  
+#   Estatística Descritiva    -	Nome da Função
+#                    Média    -	mean
+#                  Mediana    -	median
+#                   Mínimo    -	min
+#                   Máximo    -	max
+#    Amplitude de variação    -	range
+#        Quartis e quantis    -	quantile
+#   Distância Interquartil 
+#    (Inter Quarter Range)    -	IQR
+#                Variância    -	var
+#            Desvio padrão 
+#     (Standard Deviation)    -	sd
+#  Desvio abosluto mediano 
+# (Mean Absolut Deviation)    -	mad
+
+cax$cap
+mean(cax$cap)
+mdap = mean(cax$cap)
+median(cax$cap)
+min(cax$cap)
+max(cax$cap)
+range(cax$fuste)
+quantile(cax$h)
+IQR(cax$h)
+var(cax$h)
+sd(cax$h)
+
+#
+# Gráficos Exploratórios
+#
+
+head(cax)
+cax$cap
+hist( cax$cap )
+hist( cax$h, col="red" )
+hist( cax$h, col="blue", probability=T )
+
+
+hist( cax$cap, probability=T , col="blue")
+lines( density(cax$cap) , col="red")
+
+stem(cax$cap)
+stem(cax$h)
+
+boxplot( cax$cap )
+boxplot( cap ~ local, data=cax )
+
+par( mar=c(5,10,4,2) )                                   # Altera as margens da janela gráfica
+boxplot( cap ~ especie, data=cax , horizontal=T, las=1)  # Boxplot
+dev.off()                                                # Fecha a janela gráfica
+
+# Gráfico de Dispersão
+plot( cax$cap, cax$h )
+scatter.smooth( cax$cap, cax$h )
+
+#
+# Modelos Lineares
+#
+
+hipso1 = lm( formula = h ~  cap, data=cax )
+hipso1
+hipso1 = lm( h ~  cap, data=cax )
+hipso1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
