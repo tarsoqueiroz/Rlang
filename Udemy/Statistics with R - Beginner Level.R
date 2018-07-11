@@ -342,33 +342,147 @@ CrossTable(demo$gender, demo$carcat, prop.chisq = FALSE)
 ### Copy and test at home
 ###
 
+# 28. Histograms
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+require(ggplot2)
+
+ggplot()+geom_histogram(data=demo, aes(x=income))
+
+ggplot()+geom_histogram(data=demo, aes(x=income), fill="red", color="black")
+
+ggplot()+geom_histogram(data=demo, aes(x=income, y=..density..), fill="red", color="black")
+
+ggplot()+geom_histogram(data=demo, aes(x=income, y=..density..), fill="red", color="black")+facet_grid(gender~marital)
+
+ggplot()+geom_histogram(data=demo, aes(x=income, y=..density.., fill=gender), color="black")
+
+# 29. Cumulative frequency Line Charts
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+require(ggplot2)
+require(plyr)
+
+mydata <- count(demo, 'income')
+View(mydata)
+
+cumul <- cumsum(mydata$freq)
+cumperc <- cumul/nrow(demo)
+
+mydata <- cbind(mydata, cumperc)
+View(mydata)
+
+ggplot()+geom_line(data=mydata, aes(x=income, y=cumperc))
+ggplot()+geom_step(data=mydata, aes(x=income, y=cumperc))
+
+male <- demo[demo$gender=="Male",]
+female <- demo[demo$gender=="Female",]
+View(male)
+View(female)
+
+mydata_male <- count(male, "income")
+cumulm <- cumsum(mydata_male$freq)
+cumpercm <- cumulm/nrow(male)
+mydata_male <- cbind(mydata_male, cumpercm)
+View(mydata_male)
+
+mydata_female <- count(female, "income")
+cumulf <- cumsum(mydata_female$freq)
+cumpercf <- cumulf/nrow(female)
+mydata_female <- cbind(mydata_female, cumpercf)
+View(mydata_female)
+
+ggplot()+
+  geom_line(data=mydata_male, aes(x=income, y=cumpercm), color="red")+
+  geom_line(data=mydata_female, aes(x=income, y=cumpercf), color="blue")
+
+lgd <- scale_color_manual("Legend", values=c(Male="red", Female="blue"))
+
+ggplot()+
+  geom_line(data=mydata_male, aes(x=income, y=cumpercm, color="Male"), size=1.3)+
+  geom_line(data=mydata_female, aes(x=income, y=cumpercf, color="Female"), size=1.3)+
+  lgd
+
+# 30. Column charts
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+require(ggplot2)
+
+ggplot(demo, aes(x=educ, y=income, fill=educ))+
+  stat_summary(fun.y=mean, geom="bar")
+
+ggplot(demo, aes(x=educ, y=income))+
+  stat_summary(fun.y=mean, geom="bar", fill="red")
+
+ggplot(demo, aes(x=educ, y=income, fill=gender))+
+  stat_summary(fun.y=mean, geom="bar", position=position_dodge())
+
+ggplot(demo, aes(x=educ, y=income, fill=gender))+
+  stat_summary(fun.y=mean, geom="bar", position=position_stack())
+
+# 31. Mean plot charts
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+require(ggplot2)
+
+aggdata <- aggregate(demo$income, by=list(demo$gender), FUN=mean)
+View(aggdata)
+
+ggplot()+
+  geom_line(data=aggdata, aes(x=(1:2), y=aggdata$x))+
+  scale_x_discrete(name="Gender", labels=c("Female", "Male"))+
+  scale_y_continuous(name="Income", limits=c(72, 85))
+
+ggplot()+
+  geom_line(data=aggdata, aes(x=(1:2), y=aggdata$x), color="red", size=1.3)+
+  scale_x_discrete(name="Gender", labels=c("Female", "Male"))+
+  scale_y_continuous(name="Income", limits=c(72, 85))
+
+aggdata <- aggregate(demo$income, by=list(demo$educ), FUN=mean)
+View(aggdata)
+
+ggplot()+
+  geom_line(data=aggdata, aes(x=(1:5), y=aggdata$x))+
+  scale_x_discrete(name="Education Level", labels=c("College degree", "Did not complete high school", "High school degree", "Post-undergraduate degree", "Some college"))+
+  scale_y_continuous(name="Income", limits=c(64, 116))
 
 
+demo_ec <- demo[demo$carcat=="Economy",]
+demo_st <- demo[demo$carcat=="Standard",]
+demo_lu <- demo[demo$carcat=="Luxury",]
 
+agg_ec <- aggregate(demo_ec$income, by=list(demo_ec$educ), FUN=mean)
+agg_st <- aggregate(demo_st$income, by=list(demo_st$educ), FUN=mean)
+agg_lu <- aggregate(demo_lu$income, by=list(demo_lu$educ), FUN=mean)
 
+View(agg_ec)
+View(agg_st)
+View(agg_lu)
 
+ggplot()+
+  geom_line(data=agg_ec, aes(x=(1:5), y=agg_ec$x), color="green")+
+  geom_line(data=agg_st, aes(x=(1:5), y=agg_st$x), color="red")+
+  geom_line(data=agg_lu, aes(x=(1:5), y=agg_lu$x), color="blue")+
+  scale_x_discrete(name="Education Level", labels=c("College degree", "Did not complete high school", "High school degree", "Post-undergraduate degree", "Some college"))+
+  scale_y_continuous(name="Income", limits=c(15, 220))
 
+lgd <- scale_color_manual(name="Legend", values=c(Economy="green", Standard="red", Luxury="blue"))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ggplot()+
+  geom_line(data=agg_ec, aes(x=(1:5), y=agg_ec$x), color="Economy")+
+  geom_line(data=agg_st, aes(x=(1:5), y=agg_st$x), color="Standard")+
+  geom_line(data=agg_lu, aes(x=(1:5), y=agg_lu$x), color="Luxury")+
+  scale_x_discrete(name="Education Level", labels=c("College degree", "Did not complete high school", "High school degree", "Post-undergraduate degree", "Some college"))+
+  scale_y_continuous(name="Income", limits=c(15, 220))+
+  lgd
 
 
 
