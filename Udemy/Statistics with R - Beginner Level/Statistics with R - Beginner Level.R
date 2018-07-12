@@ -484,6 +484,235 @@ ggplot()+
   scale_y_continuous(name="Income", limits=c(15, 220))+
   lgd
 
+# 31. Mean plot charts
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+require(ggplot2)
+
+aggdata <- aggregate(demo$income, by=list(demo$gender),FUN=mean)
+View(aggdata)
+
+ggplot()+
+  geom_line(data=aggdata, aes(x=(1:2), y=aggdata$x))+
+  scale_x_discrete(name="Gender", labels=c("Female", "Male"))+
+  scale_y_continuous(name="Income", limits=c(72, 85))
+
+ggplot()+
+  geom_line(data=aggdata, aes(x=(1:2), y=aggdata$x), color="red", size=1.3)+
+  scale_x_discrete(name="Gender", labels=c("Female", "Male"))+
+  scale_y_continuous(name="Income", limits=c(72, 85))
+
+aggdata <- aggregate(demo$income, by=list(demo$educ), FUN=mean)
+View(aggdata)
+
+ggplot()+
+  geom_line(data=aggdata, aes(x=(1:5), y=aggdata$x))+
+  scale_x_discrete(name="Education Level", labels=c("College degree", "Did not complete high school", "High school degree", "Post-undergraduate degree", "Some college"))+
+  scale_y_continuous(name="Income", limits=c(64, 116))
+
+demo_ec <- demo[demo$carcat=="Economy",]
+demo_st <- demo[demo$carcat=="Standard",]
+demo_lu <- demo[demo$carcat=="Luxury",]
+
+agg_ec <- aggregate(demo_ec$income, by=list(demo_ec$educ), FUN=mean)
+agg_st <- aggregate(demo_st$income, by=list(demo_st$educ), FUN=mean)
+agg_lu <- aggregate(demo_lu$income, by=list(demo_lu$educ), FUN=mean)
+
+View(agg_ec)
+View(agg_st)
+View(agg_lu)
+
+ggplot()+
+  geom_line(data=agg_ec, aes(x=(1:5), y=agg_ec$x), color="green")+
+  geom_line(data=agg_st, aes(x=(1:5), y=agg_st$x), color="red")+
+  geom_line(data=agg_lu, aes(x=(1:5), y=agg_lu$x), color="blue")+
+  scale_x_discrete(name="Education Level", labels=c("College degree", "Did not complete high school", "High school degree", "Post-undergraduate degree", "Some college"))+
+  scale_y_continuous(name="Income", limits=c(15, 220))
+
+lgd <- scale_color_manual(name="Legend", values=c(Economy="green", Standard="red", Luxury="blue"))
+
+ggplot()+
+  geom_line(data=agg_ec, aes(x=(1:5), y=agg_ec$x), color="Economy")+
+  geom_line(data=agg_st, aes(x=(1:5), y=agg_st$x), color="Standard")+
+  geom_line(data=agg_lu, aes(x=(1:5), y=agg_lu$x), color="Luxury")+
+  scale_x_discrete(name="Education Level", labels=c("College degree", "Did not complete high school", "High school degree", "Post-undergraduate degree", "Some college"))+
+  scale_y_continuous(name="Income", limits=c(15, 220))+
+  lgd
+
+# 32. Scatterplot charts
+
+hw <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/hw.csv")
+View(hw)
+
+require(ggplot2)
+
+ggplot()+
+  geom_point(data=hw, aes(x=height, y=weight))+
+  scale_x_continuous(limits=c(150, 193))
+
+lgd <- hw$gender
+
+ggplot()+
+  geom_point(data=hw, aes(x=height, y=weight, color=lgd))+
+  scale_x_continuous(limits=c(150, 193))
+
+ggplot()+
+  geom_point(data=hw, aes(x=height, y=weight, shape=lgd))+
+  scale_x_continuous(limits=c(150, 193))
+
+ggplot()+
+  geom_point(data=hw, aes(x=height, y=weight, shape=lgd, color=lgd))+
+  scale_x_continuous(limits=c(150, 193))
+
+
+model <- lm(weight~height, data=hw)
+print(model)
+
+minh <- min(hw$height)
+maxh <- max(hw$height)
+
+height <- c(minh, maxh)
+print(height)
+
+fit <- predict(model, data.frame(height))
+print(fit)
+
+endpoints <- data.frame(height, fit)
+View(endpoints)
+
+ggplot()+
+  geom_point(data=hw, aes(x=height, y=weight))+
+  geom_line(data=endpoints, aes(x=height, y=fit), color="red", size=1)
+
+# 33. Boxplot charts
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+require(ggplot2)
+
+ggplot()+
+  geom_boxplot(data=demo, aes(x=gender, y=income))+
+  scale_x_discrete(labels=c("Female", "Male"))
+
+ggplot()+
+  geom_boxplot(data=demo, aes(x=gender, y=income), outlier.colour="red")+
+  scale_x_discrete(labels=c("Female", "Male"))
+
+ggplot()+
+  geom_boxplot(data=demo, aes(x=gender, y=income), outlier.colour="red", outlier.shape=4)+
+  scale_x_discrete(labels=c("Female", "Male"))
+
+lgd <- demo$gender
+View(lgd)
+
+ggplot()+
+  geom_boxplot(data=demo, aes(x=gender, y=income, fill=lgd), outlier.colour="red")+
+  scale_x_discrete(labels=c("Female", "Male"))
+
+lgd <- demo$marital
+
+ggplot()+
+  geom_boxplot(data=demo, aes(x=gender, y=income, fill=lgd))+
+  scale_x_discrete(labels=c("Female", "Male"))
+
+# 36. Checking the normality assumption
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+shapiro.test(demo$income)
+
+# 37. Checking the normality assumption - Graphical methods
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+require(ggplot2)
+
+m <- mean(demo$income)
+std <- sd(demo$income)
+
+ggplot()+
+  geom_histogram(data=demo, aes(s=income, y=..density..), fill="red")+
+  stat_function(fun=dnorm, args=list(mean=m, sd=std), aes(x=demo$income))
+
+# 38. Detecting the outliers
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+zinco <- scale(demo$income, scale=TRUE)
+sort(zinco, decreasing = TRUE)
+
+# 41. One-sample T test
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+t.test(demo$income, alternative="two.sided", mu=70)
+
+# 42. Binomial test
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+mytable = table(demo$gender)
+View(demo$gender)
+View(mytable)
+
+binom.test(mytable, p=0.50, alternative="two.sided", conf.level = 0.95)
+
+binom.test(mytable, p=0.40, alternative="two.sided", conf.level = 0.95)
+
+# 43. Chi-square test for goodness-of-fit
+
+demo <- read.csv("./Udemy/Statistics with R - Beginner Level - csv-data-frames/demographics.csv")
+View(demo)
+
+mytable = table(demo$educ)
+print(mytable)
+
+n <- length(mytable)
+print(n)
+
+thprop <- 1/n
+print(thprop)
+
+chisq.test(mytable, p=rep(thprop, n))
+
+chisq.test(mytable, p=rep(thprop, n))$expected
+chisq.test(mytable, p=rep(thprop, n))$residuals
+chisq.test(mytable, p=rep(thprop, n))$stdres
+
+chisq.test(mytable, p=c(0.30, 0.30, 0.20, 0.10, 0.10))
+chisq.test(mytable, p=c(0.30, 0.30, 0.20, 0.10, 0.10))$expected
+
+chisq.test(mytable, p=rep(thprop, n), simulate.p.value = TRUE)
+
+## 
+## 
+## 
+## 
+## Download Links
+## Seção 8, aula 46
+## Download link for the CSV files (zip):
+##   
+## https://drive.google.com/file/d/0B10XguTZRHT9NS1MRlB6ZWFxd1k/view?usp=sharing
+## 
+## Download link for the R files (zip):
+##   
+## https://drive.google.com/file/d/0B10XguTZRHT9aDRlUFZ5RE9US3M/view?usp=sharing
+## 
+## 
+## 
+## 
+
+
+
+
 
 
 
