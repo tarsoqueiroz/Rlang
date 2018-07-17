@@ -825,10 +825,398 @@ pmin(m[2, ], m[3, ])
 pmax(m[2, ], m[3, ])
 
 #
-# 38. Applying functions to matrices
+# 38. Applying functions to matrices (1)
 #
 
+m <- matrix(1:16, nrow = 4)
+m
+apply(m, 1, sum)
+apply(m, 2, sum)
 
+apply(m, 1, prod)
+apply(m, 2, prod)
+
+apply(m, 1, mean)
+apply(m, 2, mean)
+
+apply(m, 1, sd)
+apply(m, 2, sd)
+
+#
+# 39. Applying functions to matrices (2)
+#
+
+m <- matrix(1:16, nrow = 4, byrow = TRUE)
+m
+
+apply(m, 1, cumsum)
+
+m1 <- matrix(apply(m, 1, cumsum), nrow = 4, byrow = TRUE)
+m1
+
+m
+apply(m, 2, cumsum)
+apply(m, 1, sqrt)
+m
+apply(m, 2, sqrt)
+apply(m, 2, log)
+apply(m, 2, exp)
+
+m 
+m1 <- matrix(apply(m, 1, sqrt), nrow = 4, byrow = TRUE)
+m1
+
+m 
+m1 <- matrix(apply(m, 1, log), nrow = 4, byrow = TRUE)
+m1
+
+f <- function(x) { 2 * x + 3}
+m
+apply(m, 1, f)
+m
+apply(m, 2, f)
+
+#
+# 40. Applying functions to matrices (3)
+#
+
+m <- matrix(1:12, nrow = 3, byrow = TRUE)
+
+m
+sweep(m, 1, c(10,20,30), "+")
+sweep(m, 1, c(10,20,30), "-")
+sweep(m, 1, c(10,20,30), "*")
+sweep(m, 1, c(10,20,30), "/")
+
+m
+sweep(m, 2, c(10,20,30,40), "+")
+sweep(m, 2, c(10,20,30,40), "-")
+sweep(m, 2, c(10,20,30,40), "*")
+sweep(m, 2, c(10,20,30,40), "/")
+
+#
+# 41. Adding and Multiplying matrices
+#
+
+m1 <- matrix(1:9, nrow = 3, byrow = TRUE)
+m2 <- matrix(101:109, nrow = 3, byrow = TRUE)
+
+m <- m1 + m2
+m1
+m2
+m
+
+m1 <- matrix(1:15, nrow = 3, byrow = TRUE)
+m2 <- matrix(1:20, nrow = 5, byrow = TRUE)
+m1
+m2
+
+m <- m1 %*% m2
+m
+
+#
+# 42. Other matrix operations
+#
+
+m <- matrix(1:20, nrow = 5, byrow = TRUE)
+m
+t(m)
+
+m <- matrix(c(2,4,8,12,5,7,9,15,10), nrow = 3, byrow = TRUE)
+m
+det(m)
+
+mi <- solve(m)
+mi
+m %*% mi
+
+m
+x <- diag(m)
+x
+class(x)
+
+x <- c(10,12,14,16,18)
+diag(x)
+
+diag(rep(1,5))
+
+#
+# 43. Creating multidimensional Arrays
+#
+
+market1 <- matrix(c(22,44,66,9,11,5), nrow = 3)
+market1
+rownames(market1) <- c("brand1", "brand2", "brand3")
+colnames(market1) <- c("code", "price")
+market1
+
+market2 <- matrix(c(55,77,99,10,14,20), nrow = 3)
+market2
+rownames(market2) <- c("brand1", "brand2", "brand3")
+colnames(market2) <- c("code", "price")
+market2
+
+markets <- array(data=c(market1, market2), dim=c(3,2,2))
+markets
+
+markets2 <- array(data=c(market1, market2))
+markets2
+
+markets
+
+markets <- array(data=c(market1, market2), dim=c(3,2,2),
+                 dimnames = list(c("brand1", "brand2", "brand3"), c("code", "price"), c("smark1", "smark2")))
+markets
+dim(markets)
+dimnames(markets)
+
+#
+# 44. Indexing multidimensional arrays
+#
+
+markets
+markets[,,1]
+markets[,,2]
+markets[,2,1]
+markets[,1,2]
+markets[3,2,1]
+markets[2,2,2]
+markets[1,,1]
+markets[3,,2]
+markets[2,1,]
+markets[3,,]
+markets[,1,]
+
+#
+# Section 5
+#
+# 46. Create lists with the list() funcion
+#
+
+employees <- list(names=c("Mark", "Tom", "Laura", "Sandra"),
+                  age=c(49, 28, 35, 25),
+                  gender=c("m", "m", "f", "f"),
+                  salary=c(75000, 62000, 55000, 46000),
+                  manager=c(TRUE, FALSE, FALSE, FALSE))
+employees
+
+employees2 <- list(c("Mark", "Tom", "Laura", "Sandra"),
+                   c(49, 28, 35, 25),
+                   c("m", "m", "f", "f"),
+                   c(75000, 62000, 55000, 46000),
+                   c(TRUE, FALSE, FALSE, FALSE))
+employees2
+
+class(employees)
+typeof(employees)
+
+str(employees)
+str(employees2)
+names(employees)
+names(employees2)
+
+lunch <- list(Fred=c("omelette", "fried potatoes", "chicken", "icecream"),
+              Jack=c("salada", "beef steak"),
+              Peter=c("salad", "lasagna", "pancakes"),
+              bill=100)
+lunch
+str(lunch)
+
+#
+# 47. Create lists with the vector() funcion
+#
+
+employ <- vector(mode = "list")
+class(employ)
+
+employ[["names"]]   <- c("Mark", "Tom", "Laura", "Sandra")
+employ[["age"]]     <- c(49, 28, 35, 25)
+employ[["gender"]]  <- c("m", "m", "f", "f")
+employ[["salary"]]  <- c(75000, 62000, 55000, 46000)
+employ[["manager"]] <- c(TRUE, FALSE, FALSE, FALSE)
+employ
+
+#
+# 48. Indexing lists with brackets
+#
+
+employees <- list(names=c("Mark", "Tom", "Laura", "Sandra"),
+                  age=c(49, 28, 35, 25),
+                  gender=c("m", "m", "f", "f"),
+                  salary=c(75000, 62000, 55000, 46000),
+                  manager=c(TRUE, FALSE, FALSE, FALSE))
+employees[["names"]]
+x <- employees[["names"]]
+x
+class(x)
+typeof(x)
+
+employees[["age"]]
+employees[[1]]
+employees[[5]]
+
+employees[["names"]][3]
+employees[[1]][3]
+employees[[c(1,3)]]
+
+employees[["salary"]][2]
+employees[[4]][2]
+employees[[c(4,2)]]
+
+employees[["salary"]][1:3]
+employees[["salary"]][c(1,4)]
+
+employees[["salary"]][-2]
+employees
+employees[["age"]][-1:-3]
+
+#
+# 49. Indexing lists using objects names
+#
+
+employees <- list(names=c("Mark", "Tom", "Laura", "Sandra"),
+                  age=c(49, 28, 35, 25),
+                  gender=c("m", "m", "f", "f"),
+                  salary=c(75000, 62000, 55000, 46000),
+                  manager=c(TRUE, FALSE, FALSE, FALSE))
+employees
+
+employees$names
+employees$gender
+employees$salary
+
+employees$salary[2]
+employees$salary[2:4]
+
+employees$salary[-1]
+
+emp2 <- list(age=employees$age, salary=employees$salary)
+emp2
+class(emp2)
+
+#
+# 50. Editing values in lists
+#
+
+employees <- list(names=c("Mark", "Tom", "Laura", "Sandra"),
+                  age=c(49, 28, 35, 25),
+                  gender=c("m", "m", "f", "f"),
+                  salary=c(75000, 62000, 55000, 46000),
+                  manager=c(TRUE, FALSE, FALSE, FALSE))
+employees
+
+employees[["salary"]][2] <- 64000
+employees
+
+employees$salary[2] <- 66000
+employees
+
+employees[["manager"]][3] <- TRUE
+employees
+
+employees[["salary"]] <- c(85000, 7000, 69000, 49000)
+employees
+
+#
+# 51. Adding and removing list objects
+#
+
+employees <- list(names=c("Mark", "Tom", "Laura", "Sandra"),
+                  age=c(49, 28, 35, 25),
+                  gender=c("m", "m", "f", "f"),
+                  salary=c(75000, 62000, 55000, 46000),
+                  manager=c(TRUE, FALSE, FALSE, FALSE))
+employees
+
+employees$hours <- c(200, 220, 235, 215)
+employees
+
+employees$hours <- NULL
+employees
+
+employees[["names"]][5] <- "Ken"
+employees[["age"]][5] <- 58
+employees[["gender"]][5] <- "M"
+employees[["salary"]][5] <- 43000
+employees[["manager"]][5] <- FALSE
+employees
+
+#
+# 52. Applying functions to lists
+#
+
+carspec <- list(engine=c(1.8, 3.2, 3.5, 1.8, 2.8, 4.2),
+                horse=c(140, 225, 210, 150, 200, 310),
+                weight=c(2639, 3517, 3850, 2998, 3561, 3902))
+carspec
+
+lapply(carspec, mean)
+l <- lapply(carspec, mean)
+l
+class(l)
+typeof(l)
+
+lapply(carspec, sd)
+
+lapply(carspec, sum)
+lapply(carspec, prod)
+
+lapply(carspec, cumsum)
+lapply(carspec, cumprod)
+
+lapply(carspec, log)
+
+f <- function(x) { x^2 + 3 * x }
+lapply(carspec, f)
+
+sapply(carspec, mean)
+s <- sapply(carspec, mean)
+s
+class(s)
+typeof(s)
+names(s)
+
+sapply(carspec, mean, simplify = FALSE)
+s <- sapply(carspec, mean)
+s
+class(s)
+typeof(s)
+names(s)
+
+carspec2 <- list(make=c("Toyota", "Honda", "Renault", "Mazda", "Volkswagen", "BMW"),
+                engine=c(1.8, 3.2, 3.5, 1.8, 2.8, 4.2),
+                horse=c(140, 225, 210, 150, 200, 310),
+                weight=c(2639, 3517, 3850, 2998, 3561, 3902))
+carspec2
+lapply(carspec2, mean)
+sapply(carspec2, mean)
+
+#
+# 53. Practical example of list: the regression analysis output
+#
+
+price  <- c(21.5, 28.4, 42.0, 23.9, 33.9, 62.0, 26.9, 33.4, 39, 21.9)
+engine <- c(1.8, 3.2, 3.5, 1.8, 2.8, 4.2, 2.5, 2.8, 2.8, 3.1)
+horse  <- c(140, 225, 210, 150, 200, 310, 170, 193, 195, 175)
+
+fit <- lm(price~engine+horse)
+fit
+typeof(fit)
+names(fit)
+
+fit$coefficients
+fit$coefficients[2]
+fit$coefficients[1]
+fit$call
+fit$model
+fit$fitted.values
+fit$residuals
+
+#
+# Section 6
+#
+# 56. Working with factors
+#
 
 
 
