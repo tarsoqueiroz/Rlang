@@ -1218,6 +1218,326 @@ fit$residuals
 # 56. Working with factors
 #
 
+x <- c(4,4,6,5,6,6,6,4,4,5,4,5,6,4)
+f <- factor(x)
+f
+
+y <- c("a","b","c","b","a","c","b","a","a","c")
+ff <- factor(y)
+ff
+
+levels(f)
+levels(ff)
+
+x
+f <- factor(x, labels = c("Ford", "Toyota", "Mercedes"))
+f
+
+f <- factor(x, levels = c(5,6,4), labels = c("Ford", "Toyota", "Mercedes"))
+x
+f
+
+x <- c(1,1,3,2,2,1,3,3,2,1,1,2,3)
+f <- ordered(x, levels=c(1,2,3), labels=c("elementary","middle","high"))
+f
+f <- ordered(x, levels=c(3,2,1), labels=c("elementary","middle","high"))
+f
+f <- ordered(x, labels=c("elementary","middle","high"))
+f
+
+length(f)
+f[10]
+f[14] <- "elementary"
+f
+f <- ordered(x, levels=c(1,2,3,4), labels=c("elementary","middle","high","doctoral"))
+f
+f[14] <- "doctoral"
+f
+f[15] <- "unknown"
+f
+
+#
+# 57. Splitting a vector by a factor levels
+#
+
+sal <-          c(1000, 1800, 2500, 1750, 1900, 2700, 2100, 1100)
+categ <- factor(c("W",  "MM", "TM", "MM", "W",  "TM", "MM", "W"))
+split(sal, categ)
+s <- split(sal, categ)
+class(s)
+names(s)
+s["MM"]
+
+gender <- factor(c("Male", "Female", "Male", "Male", "Female", "Female", "Male", "Female"))
+s <- split(sal, list(categ, gender))
+s
+class(s)
+
+#
+# 58. The tapply() function
+#
+
+sal <-          c(1000, 1800, 2500, 1750, 1900, 2700, 2100, 1100)
+categ <- factor(c("W",  "MM", "TM", "MM", "W",  "TM", "MM", "W"))
+
+tapply(sal, categ, mean)
+t <- tapply(sal, categ, mean)
+t
+class(t)
+gender <- factor(c("Male", "Female", "Male", "Male", "Female", "Female", "Male", "Female"))
+t <- tapply(sal, list(categ, gender), mean)
+t
+class(t)
+
+#
+# 59. The by() function
+#
+
+sal <-          c(1000, 1800, 2500, 1750, 1900, 2700, 2100, 1100)
+categ <- factor(c("W",  "MM", "TM", "MM", "W",  "TM", "MM", "W"))
+
+by(sal, categ, mean)
+b <- by(sal, categ, mean)
+b
+class(b)
+typeof(b)
+
+b[2]
+
+b <- as.list(b)
+b
+
+b$TM
+
+#
+# Section 7
+#
+# 61. Creating Data Frames
+#
+
+x <- 1:10
+y <- rnorm(10)
+x
+y
+dt <- data.frame(x, y)
+dt
+View(dt)
+
+z <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")
+w <- c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)
+dt <- data.frame(x, y, z, w, stringsAsFactors = FALSE)
+dt
+View(dt)
+
+dt <- data.frame(x, y, z, w, 
+                 row.names = c("row1","row2","row3","row4","row5","row6","row7","row8","row9","row10"),
+                 stringsAsFactors = FALSE)
+View(dt)
+class(dt)
+typeof(dt)
+
+dim(dt)
+nrow(dt)
+ncol(dt)
+
+str(dt)
+
+#
+# 62. Loading Data Frames from external files
+#
+
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               sep = ";",
+               stringsAsFactors = FALSE)
+bm
+View(bm)
+
+car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.csv", 
+               stringsAsFactors = FALSE)
+car
+View(car)
+
+cpu <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/cpu-performance-data.txt", 
+                sep = ",",
+                header = FALSE,
+                stringsAsFactors = FALSE)
+cpu
+View(cpu)
+# or
+cpu <- read.delim("./Udemy/R Programming For Absolute Beginners/datasets/cpu-performance-data.txt", 
+                sep = ",",
+                header = FALSE,
+                stringsAsFactors = FALSE)
+cpu
+View(cpu)
+
+#
+# 63. Writing Data Frames in external files
+#
+
+x <- 1:10
+y <- rnorm(10)
+z <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")
+w <- c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)
+dt <- data.frame(x, y, z, w, stringsAsFactors = FALSE)
+dt
+View(dt)
+
+write.csv(dt, 
+          file = "./Udemy/R Programming For Absolute Beginners/datasets/example.csv")
+write.csv(dt, 
+          file = "./Udemy/R Programming For Absolute Beginners/datasets/example2.csv",
+          row.names = FALSE)
+write.table(dt, 
+            file = "./Udemy/R Programming For Absolute Beginners/datasets/example3.csv",
+            row.names = FALSE)
+
+#
+# 64. Indexing Data Frames as lists
+#
+
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               sep = ";",
+               stringsAsFactors = FALSE)
+bm
+View(bm)
+
+bm[[2]]
+bm[[2]][10]
+
+bm[["balance"]]
+bm[["balance"]][4]
+bm$balance
+bm$balance[4]
+
+balance <- bm$balance[2:7]
+balance
+class(balance)
+
+#
+# 65. Indexing Data Frames as matrices
+#
+
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               sep = ";",
+               stringsAsFactors = FALSE)
+bm
+View(bm)
+
+bm[3,]
+bm[,6]
+x <- bm[,6]
+class(x)
+
+y <- bm[6]
+y
+View(y)
+class(y)
+
+bm[3,4]
+bm[1:4,]
+bm[,1:3]
+bm[2,1:3]
+bm[1:4,5:8]
+bm[1:4, c(5:8,11)]
+bm1 <- bm[-1]
+View(bm1)
+bm1 <- bm[,-3]
+View(bm1)
+bm1 <- bm[-1:-5,-3:-5]
+View(bm1)
+
+#
+# 66. Selecting a random sample of entries
+#
+
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               sep = ";",
+               stringsAsFactors = FALSE)
+bm
+View(bm)
+
+nrows <- nrow(bm)
+nrows
+
+i <- sample(nrows, 100)
+i
+bm1 <- bm[i,]
+bm1
+View(bm1)
+vm
+
+bm2 <- bm[-i,]
+View(bm2)
+
+#
+# 67. Filtering Data Frames
+#
+
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               sep = ";",
+               stringsAsFactors = FALSE)
+View(bm)
+
+bm1 <- bm[bm$balance > 1000,]
+View(bm1)
+bm1 <- bm[bm$duration < 150,]
+View(bm1)
+bm1 <- bm[bm$duration == 185,]
+View(bm1)
+bm1 <- bm[bm$education == "tertiary",]
+View(bm1)
+bm1 <- bm[bm$education == "tertiary" & bm$balance > 2000,]
+View(bm1)
+bm1 <- bm[bm$education == "tertiary" & bm$marital == "married",]
+View(bm1)
+bm1 <- bm[bm$education == "tertiary" & bm$marital == "married", c(1:4,6)]
+View(bm1)
+
+#
+# 68. Editing values in Data Frames
+#
+
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               sep = ";",
+               stringsAsFactors = FALSE)
+View(bm)
+
+bm[2,3] <- "married"
+View(bm)
+
+bm$balance[1] <- 1000
+bm$loan[7] <- "no"
+
+bm$balance[4:6] <- c(400,500,600)
+
+#
+# 69. Adding rows and columns to Data Frames
+#
+
+car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.csv", 
+                header = TRUE,
+                stringsAsFactors = FALSE)
+View(car)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
