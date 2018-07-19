@@ -1526,20 +1526,159 @@ car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.
                 stringsAsFactors = FALSE)
 View(car)
 
+?rbind
+car2 <- rbind(car, c(26.4, 3.2, 225, 3500))
+View(car2)
 
+x <- runif(nrow(car))
+x
+car3 <- cbind(car, x)
+View(car3)
 
+?runif
+z <- runif(nrow(car), 1, 2)
+w <- runif(nrow(car), 99, 100)
+car4 <- cbind(car, z, w)
+View(car4)
 
+car$price2 <- car$price / 2
+car$pw <- car$price / car$weight
+View(car)
+car$pw <- NULL
 
+#
+# 70. Naming rows and columns in data frames
+#
 
+car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.csv", 
+                header = TRUE,
+                stringsAsFactors = FALSE)
+View(car)
 
+x <- 1001:1155
+rownames(car) <- x
 
+rownames(car)[3] <- "BMW"
+rownames(car)[4:6] <- c("Renault", "Mazda", "Ford")
+colnames(car)[4] <- "curbweight"
 
+#
+# 71. Applying functions to data frames
+#
 
+car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.csv", 
+                header = TRUE,
+                stringsAsFactors = FALSE)
+View(car)
 
+m <- apply(car, 2, mean)
+m
+class(m)
 
+ml <- lapply(car, mean)
+ml
+class(ml)
 
+sm <- sapply(car, mean)
+sm
+class(sm)
 
+sm2 <- sapply(car, mean, simplify = FALSE)
+class(sm2)
 
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               stringsAsFactors = FALSE,
+               sep = ";")
+View(bm)
+
+apply(bm, 2, mean)
+lapply(bm, mean)
+sapply(bm, mean)
+
+#
+# 72. Sorting data frames
+#
+
+car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.csv", 
+                header = TRUE,
+                stringsAsFactors = FALSE)
+View(car)
+
+car2 <- car[order(car$price),]
+View(car2)
+car2 <- car[order(-car$price),]
+View(car2)
+car2 <- car[order(car$price,  decreasing = TRUE),]
+View(car2)
+car2 <- car[order(car$engine, car$horse),]
+View(car2)
+car2 <- car[order(car$engine, -car$horse),]
+View(car2)
+
+bm <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/bank-marketing.csv", 
+               header = TRUE,
+               stringsAsFactors = FALSE,
+               sep = ";")
+View(bm)
+
+bm2 <- bm[order(bm$education),]
+View(bm2)
+bm2 <- bm[order(bm$education, decreasing = TRUE),]
+View(bm2)
+bm2 <- bm[order(-bm$education),]
+View(bm2)
+
+#
+# 73. Shuffling data frames
+#
+
+car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.csv", 
+                header = TRUE,
+                stringsAsFactors = FALSE)
+View(car)
+
+rnd <- runif(nrow(car))
+car <- car[order(rnd),]
+
+#
+# 74. Merging data frames
+#
+
+car <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/carsales.csv", 
+                header = TRUE,
+                stringsAsFactors = FALSE)
+View(car)
+
+id <- c(101, 102, 103, 104, 105)
+name <- c("Mark", "Lisa", "John", "Anna", "Peter")
+salary <- c(62000, 75000, 48000, 42000, 56000)
+employ <- data.frame(id, name, salary)
+employ
+View(employ)
+
+h <- c(235, 220, 247, 215, 260)
+hours <- data.frame(id, h)
+hours
+
+dt <- merge(employ, hours, by = "id")
+dt
+
+code <- c(104, 105, 101, 103, 102)
+bplace <- c("Boston", "New York", "Chicago", "Dallas", "Seattle")
+birth <- data.frame(code, bplace)
+birth
+
+dt
+
+employ2 <- merge(dt, birth, by.x = "id", by.y = "code")
+employ2
+
+#
+# Section 8
+#
+# 76. For loops
+#
 
 
 
