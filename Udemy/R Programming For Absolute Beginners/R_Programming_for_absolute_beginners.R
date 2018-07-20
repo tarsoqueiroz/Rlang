@@ -7,8 +7,11 @@
 stocks <- read.csv("./Udemy/R Programming For Absolute Beginners/datasets/stocks.csv")
 View(stocks)
 
+########################################################################################################################
 #
 # Section 2
+#
+########################################################################################################################
 #
 # 3. R Studio interface
 #
@@ -100,8 +103,11 @@ rm(x)
 rm(y, z)
 rm(list=ls())
 
+########################################################################################################################
 #
 # Section 3
+#
+########################################################################################################################
 #
 # 8. Creating vectors with the c() function
 #
@@ -606,8 +612,11 @@ sal <- c(80, 66, 42, 40, 75, 82, 54, 44, 85, 83)
 edu <- c(15, 18, 12, 12, 16, 17, 13, 12, 17, 16)
 cor.test(sal, edu)
 
+########################################################################################################################
 #
 # Section 4
+#
+########################################################################################################################
 #
 # 30. Creating matrices with the matrix() function
 #
@@ -987,8 +996,11 @@ markets[2,1,]
 markets[3,,]
 markets[,1,]
 
+########################################################################################################################
 #
 # Section 5
+#
+########################################################################################################################
 #
 # 46. Create lists with the list() funcion
 #
@@ -1212,8 +1224,11 @@ fit$model
 fit$fitted.values
 fit$residuals
 
+########################################################################################################################
 #
 # Section 6
+#
+########################################################################################################################
 #
 # 56. Working with factors
 #
@@ -1309,8 +1324,11 @@ b
 
 b$TM
 
+########################################################################################################################
 #
 # Section 7
+#
+########################################################################################################################
 #
 # 61. Creating Data Frames
 #
@@ -1674,20 +1692,576 @@ dt
 employ2 <- merge(dt, birth, by.x = "id", by.y = "code")
 employ2
 
+########################################################################################################################
 #
 # Section 8
+#
+########################################################################################################################
 #
 # 76. For loops
 #
 
+for (i in 1:10) {
+  print(i^2)
+}
 
+x <- c()
+for (i in 1:10) {
+  x <- c(x, i^2)
+}
+x
 
+x <- c()
+for (i in 1:10) {
+  x[i] <- i^2
+}
+x
 
+x <- seq(1, 10, length = 20)
+x
+for (i in x) {
+  print(i^2)
+}
 
+y <- c()
+for (i in x) {
+  y <- c(y, i^2)
+}
+y
 
+y <- c()
+ind <- 1
+for (i in x) {
+  y[ind] <- i^2
+  ind <- ind + 1
+}
+y
 
+x <- c()
+for (i in 1:10) {
+  if (i == 4) next
+  x <- c(x, i^2)
+}
+x
 
+x <- c()
+for (i in 1:10) {
+  if (i == 4) break
+  x <- c(x, i^2)
+}
+x
 
+#
+# 77. While loops
+#
+
+i <- 0
+x <- c()
+while (i < 10) {
+  i <- i + 1
+  x <- c(x, sqrt(i))
+}
+x
+
+i <- 0
+while (i < 10) {
+  sqrt(i)
+}
+
+i <- 0
+x <- c()
+while (i < 10) {
+  i <- i + 1
+  if (i == 4) next
+  x <- c(x, sqrt(i))
+}
+x
+
+i <- 0
+x <- c()
+while (i < 10) {
+  i <- i + 1
+  if (i == 4) break
+  x <- c(x, sqrt(i))
+}
+x
+
+#
+# 78. Repeat loops
+#
+
+i <- 0
+repeat {
+  i <- i + 1
+  print(i * 2)
+  if (i == 10) break
+}
+
+i <- 0
+repeat {
+  i <- i + 1
+  print(i * 2)
+}
+
+#
+# 79. Nested For loops
+#
+
+x <- c(1, 2, 3)
+y <- c(10, 20, 30, 40, 50)
+m <- c()
+for (i in 1:length(x)) {
+  rw <- c()
+  for (j in 1:length(y)) {
+    rw <- c(rw, x[i] * y[j])
+  }
+  m <- rbind(m, rw)
+}
+m
+
+m <- matrix(1:12, nrow = 3, byrow = TRUE)
+m
+vect_ssq <- c()
+for (i in 1:nrow(m)) {
+  sq <- c()
+  for (j in 1:ncol(m)) {
+     sq <- c(sq, m[i, j] ^ 2)
+  }
+  vect_ssq <- c(vect_ssq, sum(sq))
+}
+vect_ssq
+
+#
+# 80. Conditional statements
+#
+
+x <- 10
+if (x > 0) { x * 5}
+x <- -2
+if (x > 0) { x * 5}
+
+x <- 10
+if (x > 0) { x * 5} else { x * 10}
+x <- -7
+if (x > 0) { x * 5} else { x * 10}
+
+x <- 10
+y <- 7
+if (x > 0 & y > 0) { x + y } else { print("Stop Code") }
+x <- 10
+y <- 0
+if (x > 0 & y > 0) { x + y } else { print("Stop Code") }
+
+x <- 10
+y <- -5
+if (x > 0 | y > 0) { x + y } else { print("Stop Code") }
+x <- 0
+y <- -2
+if (x > 0 | y > 0) { x + y } else { print("Stop Code") }
+
+x <- -10
+if (x >= 0) {
+  s <- seq(0, x, length = 10)
+  sum(s) ^ 2
+} else {
+  x <- -x
+  s <- seq(0, x, length = 10)
+  sum(s) ^ 2
+}
+
+#
+# 81. Nested Conditional statements
+#
+
+x <- 30
+if (x <= 100) {
+  if (x <= 50) {
+    print("Your number is lower than or equal to 50")
+  } else {
+    print("Your number is between 50 and 100")
+  }
+} else {
+  print("Your number is greater than 100")
+}
+x <- 900
+if (x <= 100) {
+  if (x <= 50) {
+    print("Your number is lower than or equal to 50")
+  } else {
+    print("Your number is between 50 and 100")
+  }
+} else {
+  print("Your number is greater than 100")
+}
+
+#
+# 82. Loops and Conditional statements
+#
+
+x <- c(8, 10, 15, 20, 23, 26, 31)
+ifelse(x%%2==0, x / 2, x)
+
+for (i in x) {
+  if (i %% 2 == 0) { 
+    print(i / 2) 
+  } else { 
+    print(i) 
+  }
+}
+
+m <- matrix(sample(100, 9), nrow = 3)
+m
+even <- c()
+odd <- c()
+for (i in 1:nrow(m)) {
+  for (j in 1:ncol(m)) {
+    if (m[i, j] %% 2 == 0) {
+      even <- c(even, m[i, j]) 
+    } else {
+      odd <- c(odd, m[i, j]) 
+    }
+  }
+}
+even
+odd
+
+#
+# 83. User defined functions
+#
+
+f <- function(x) {
+  x ^ 2 + 3 * x + 5
+}
+
+f(1)
+f(-5)
+f(1:10)
+
+class(f)
+
+f <- function(x, y) {
+  sin(x) + cos(y)
+}
+
+f(0, 0)
+f(190, 120)
+
+f <- function (x, y) {
+  if (y != 1) {
+    x ^ 2 / (y - 1)
+  }
+}
+f(10, 11)
+f(3, 1)
+
+f <- function(x, y) {
+  if (y != 1) {
+    x ^ 2 / (y - 1) 
+  } else {
+    print("The y value must be different from 1.")
+  }
+}
+f(10, 11)
+f(3, 1)
+
+area <- function(width, height) {
+  width * height
+}
+area(10, 4)
+
+area <- function(width, height = 4) {
+  width * height
+}
+area(10)
+area(10,3)
+
+formals(area)
+body(area)
+body(f)
+
+#
+# 84. The Return command
+#
+
+area <- function(width, height) {
+  a <- width * height
+}
+area(5, 3)
+a
+
+area <- function(width, height) {
+  a <- width * height
+  
+  return(a)
+}
+area(5, 3)
+
+area <- function(width, height) {
+  a <- width * height
+  
+  return(list(a, width))
+}
+area(5, 3)
+
+area <- function(width, height) {
+  a <<- width * height
+  
+  return(list(a, width))
+}
+area(5, 3)
+a
+
+#
+# 85. More complex functions examples
+#
+
+f <- function(x, y) {
+  m <- c()
+  for (i in 1:length(x)) {
+    rw <- c()
+    for (j in 1:length(y)) {
+      rw <- c(rw, x[i] * y[j])
+    }
+    m <- rbind(m, rw)
+  }
+  
+  return(m)
+}
+f(c(1,2,3), c(10,20,30))
+
+f <- function(m) {
+  vect_ssq <- c()
+  for (i in 1:nrow(m)) {
+    sq <- c()
+    for (j in 1:ncol(m)) {
+      sq <- c(sq, m[i, j] ^ 2)
+    }
+    vect_ssq <- c(vect_ssq, sum(sq))
+  }
+  
+  return(vect_ssq)
+}
+mat <- matrix(1:9, nrow = 3, byrow = TRUE)
+f(mat)
+
+#
+# 86. Checking whether an integer is a perfect square
+#
+
+isperf <- function(x) {
+  if (x < 0) {
+    print("The argument is negative number!")
+  } else {
+    if (round(x) != x) {
+      print("The argument is not an integer!")
+    } else {
+      if (round(sqrt(x)) == sqrt(x)) {
+        print("The argument is a perfect square")
+        
+        return(sqrt(x))
+      } else {
+        print("The argument is not a perfect square")
+      }
+    }
+  }
+}
+isperf(64)
+isperf(-5)
+isperf(3.5)
+isperf(42)
+
+#
+# 87. A custom function that solves quadratic equations
+#
+
+qd <- function(a, b, c) {
+  delta <- b ^ 2 - 4 * a * c
+  if (delta < 0 ) {
+    print("The equations does not have real solution")
+    
+    return(delta)
+  } else {
+    if (delta == 0) {
+      x1 <- (-b) / (2 * a)
+      print("The equation has one real solution")
+      
+      return(list(delta, x1))
+    } else {
+      x1 <- (-b + sqrt(delta)) / (2 * a)
+      x2 <- (-b - sqrt(delta)) / (2 * a)
+      print("The equation has two real solutions")
+      
+      return(list(delta, x1, x2))
+    }
+  }
+}
+qd(2, 10, 8)
+qd(-1, -4, -4)
+qd(1, 1, 1)
+
+#
+# 88. Binary operations
+#
+
+"%a2b2%" <- function (a, b) { a ^ 2 * b ^ 2 }
+
+2 %a2b2% 3
+c(1, 2) %a2b2% c(3, 4)
+m1 <- matrix(1:4, nrow = 2, byrow =  TRUE)
+m2 <- matrix(7:10, nrow = 2, byrow =  TRUE)
+m1
+m2
+m1 %a2b2% m2
+
+"%logab%" <- function (a, b) { log(1 / a + 1 / b) }
+0.5 %logab% 0.1
+0.5 %logab% 0
+0.5 %logab% -0.5
+
+########################################################################################################################
+#
+# Section 9
+#
+########################################################################################################################
+#
+# 90. Creating strings
+#
+
+x <- "Hello my friends"
+x
+y <- 'Hello my friens'
+y
+x <- "Hello 'my' friends"
+x
+y <- 'Hello "my" friens'
+y
+y <- 'Hello 'my' friens'
+y
+
+nchar(x)
+class(x)
+typeof(x)
+
+letters
+letters[1]
+letters[1:5]
+letters[c(1,5,14)]
+
+x <- ""
+x
+nchar(x)
+
+y <- character(2)
+y
+length(y)
+nchar(y)
+
+z <- character(0)
+z
+length(z)
+nchar(z)
+
+z[1] <- "Tom"
+z
+length(z)
+nchar(z)
+
+x <- "The wheather is fine"
+is.character(x)
+
+x <- c(2, 3, 4)
+typeof(x)
+x <- as.character(x)
+x
+typeof(x)
+is.character(x)
+
+#
+# 91. Printing strings
+#
+
+print("The weather is fine")
+
+print("The weather is fine", quote = FALSE)
+
+noquote("The weather is fine")
+
+format(3.823564997, digits = 3)
+format(5.8, nsmall = 4)
+
+x <- 5.45839
+typeof(x)
+y <- format(x, digits = 3)
+y
+typeof(y)
+
+sprintf("%f", 0.725896956)
+sprintf("%.3f", 0.725896956)
+sprintf("%.f", 0.725896956)
+sprintf("%+f", 0.725896956)
+sprintf("%+f", -0.725896956)
+sprintf("%+.3f", 0.725896956)
+
+sprintf("%e", 82.235691)
+sprintf("%E", 82.235691)
+
+sprintf("%g", 82.235691)
+sprintf("%.4g", 82.235691)
+
+sprintf("%.4s", "Philadelphia")
+sprintf("%d", 23755)
+
+sprintf("This book costs %+.1f dollars", 12.82)
+
+a <- 7
+b <- 3
+x <- sprintf("The sum of the numbers %d and %d is %d", a, b, a + b)
+x
+
+a <- 4.5
+b <- 10
+x <- sprintf("The sum of the numbers %.1f and %d is %+.1f", a, b, a + b)
+x
+
+#
+# 92. Concatenating strings
+#
+
+x <- "The weather"
+y <- "is fine"
+z <- c(x, y)
+z
+z <- paste(x, y)
+z
+z <- paste(x, y, sep = " ")
+z
+z <- paste(x, y, sep = "")
+z
+z <- paste(x, y, sep = "-")
+z
+
+x <- c("a", "b", "c", "d")
+y <- c(1, 2, 3, 4)
+w <- paste(x, y)
+w
+w <- paste(x, y, sep = "--")
+w
+w <- paste(x, y, sep = "--", collapse = ",")
+w
+w <- paste(x, y, sep = "--", collapse = ", ")
+w
+
+x <- c("The weather", "we go to")
+y <- c("is fine", "take a walk")
+z <- paste(x, y, collapse = " and ")
+z
+
+paste0("Port", "land")
+paste0("Port", "land", sep = "")
+
+cat("The weather is fine")
+cat("The weather", "is fine")
+cat("The weather", "is fine", sep = "_")
 
 
 
