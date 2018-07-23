@@ -2263,6 +2263,624 @@ cat("The weather is fine")
 cat("The weather", "is fine")
 cat("The weather", "is fine", sep = "_")
 
+#
+# 93. String manipulation (1)
+#
+
+x <- "Mark and Jenny went to New York"
+tolower(x)
+toupper(x)
+casefold(x)
+casefold(x, upper = TRUE)
+
+x <- "Mary has o cat"
+chartr("o", "a", x)
+
+x <- "Mary has o dog"
+chartr("o", "a", x)
+
+x <- "B*rry h*s * $ed t$uck"
+chartr("*$", "ar", x)  
+
+#
+# 94. String manipulation (2)
+#
+
+x <- "Philadelphia"
+substr(x, 5, 9)
+substr(x, 9, 5)
+
+x <- c("Philadelphia", "Chicago", "Seattle")
+substr(x, 2, 4)
+substr(x, 2, 2) <- "$"
+x
+
+x <- c("Philadelphia", "Chicago", "Seattle")
+substr(x, 2, 4) <- "$$$"
+x
+
+x <- c("Philadelphia", "Chicago", "Seattle")
+substr(x, 2, 2) <- c("$", "*", "&")
+x
+
+x <- c("Philadelphia", "Chicago", "Seattle")
+substr(x, 2, 4) <- c("$*&", "*&$", "&$*")
+x
+
+#
+# 95. String manipulation (3)
+#
+
+x <- "1589-3558-0156-2079"
+strsplit(x, split = "-")
+
+strsplit("Philadelphia", split = "d")
+
+strsplit("New York", split = " ")
+
+strsplit("Detroit", split = "")
+
+#
+# 96. Functions for finding patterns in strings
+#
+
+x <- c("Philadelphia", "Austin")
+grep(pattern = "del", x)
+grep(pattern = "stin", x)
+grep(pattern = "non", x)
+grep(pattern = "i", x)
+grep(pattern = "a", x)
+grep(pattern = "a", x, ignore.case = TRUE)
+grep(pattern = "del", x, value = TRUE)
+grep(pattern = "stin", x, value = TRUE)
+grep(pattern = "STIN", x, value = TRUE, ignore.case = TRUE)
+
+grepl(pattern = "del", x)
+grepl(pattern = "stin", x)
+grepl(pattern = "w", x)
+grepl(pattern = "a", x)
+grepl(pattern = "a", x, ignore.case = TRUE)
+
+grep("del", x)
+grepl("del", x)
+
+regexpr("hil", x)
+regexpr("stin", x)
+regexpr("w", x)
+regexpr("a", x)
+regexpr("a", x, ignore.case = TRUE)
+
+gregexpr("hil", x)
+gregexpr("stin", x)
+gregexpr("w", x)
+gregexpr("a", x)
+gregexpr("a", x, ignore.case = TRUE)
+
+regexec("hil", x)
+regexec("stin", x)
+regexec("a", x, ignore.case = TRUE)
+
+#
+# 97. Functions for replacing patterns in strings
+#
+
+x <- c("Massachussets", "Russel")
+
+sub("ss", "dd", x)
+sub("abc", "xyz", x)
+
+gsub("ss", "dd", x)
+
+#
+# 98. Regular expressions
+#
+
+grep("[ld]", c("Philadelphia", "Milwaukee", "Boston"), value = TRUE)
+grepl("[ld]", c("Philadelphia", "Milwaukee", "Boston"))
+
+gsub("[ld]", "$", c("Philadelphia", "Milwaukee", "Boston"))
+gsub("[ld]", "***", c("Philadelphia", "Milwaukee", "Boston"))
+
+grep("[^ld]", c("Philadelphia", "Milwaukee", "Boston"), value = TRUE)
+grepl("[^ld]", c("Philadelphia", "Milwaukee", "Boston"))
+grep("[^top]", c("stop", "pause", "top"), value = TRUE)
+
+grep("[25]", c("as148", "25", "wd570"), value = TRUE)
+grep("[^25]", c("as148", "25", "wd570"), value = TRUE)
+
+grep("[2-5]", c("as148", "tm254", "wd189"), value = TRUE)
+grep("[^2-5]", c("as148", "234", "167"), value = TRUE)
+
+x <- c("target", "window", "store", "stairs")
+grep("t.r", x, value = TRUE)
+grep("t..r", x, value = TRUE)
+
+x <- c("bnm", "as.d", "qwe.")
+grep("\\.", x, value = TRUE)
+
+x <- c("stop", "wait35", "4abc")
+grep("\\d", x, value = TRUE)
+
+x <- c("stop", "wait35", "789")
+grep("\\D", x, value = TRUE)
+
+x <- c("abc", "d ef", "ghi  ")
+grep("\\s", x, value = TRUE)
+
+x <- c("abc", "d ef", "   ")
+grep("\\S", x, value = TRUE)
+
+x <- c("stop", "stop12", "456", "abc ", "abc-_", "", "4$#", "$&#", "#@_", "#@-")
+grep("\\w", x, value = TRUE)
+
+x
+grep("\\W", x, value = TRUE)
+
+########################################################################################################################
+#
+# Section 10
+#
+########################################################################################################################
+#
+# 100. Building scatterplot charts
+#
+
+adv <- rnorm(30, 400, 200)
+sales <- rnorm(30, 4000, 1000)
+
+plot(sales~adv)
+plot(sales~adv, type = "p")
+plot(adv, sales)
+
+#
+# 101. Setting graphical parameters (1)
+#
+
+plot(sales~adv, main = "Sales vs Advertising Expenses")
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands")
+ 
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     xlim = c(200, 600))
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     ylim = c(3000, 4000))
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 4)
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 2, 
+     cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.8)
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 2, 
+     cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.8,
+     sub = "Data for 30 Companies")
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 2, 
+     cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.8,
+     sub = "Data for 30 Companies", cex.sub = 0.7)
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 2, 
+     cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.8,
+     sub = "Data for 30 Companies", cex.sub = 0.7, 
+     font.lab = 3)
+
+#
+# 102. Setting graphical parameters (2)
+#
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1)
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "red")
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "darkblue")
+
+colors()
+
+### http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "chocolate")
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "#004A33")
+
+### http://www.cookbook-r.com/Graphs/Shapes_and_line_types/
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "red",
+     pch = 3)
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "red",
+     pch = 3, cex = 2)
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "red",
+     pch = 3, cex = 3)
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "red",
+     pch = 3, cex = 1)
+
+par(bg = "yellow")
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "red",
+     pch = 8)
+par(bg = "white")
+
+grid(nx = 10, ny = 10, col = "gray", lty = "solid")
+
+#
+# 103. Adding a trend line to a scatterplot
+#
+
+plot(sales~adv, 
+     main = "Sales vs Advertising Expenses",
+     xlab = "Advertising Expenses",
+     ylab = "Sales in Thousands",
+     font.main = 1, 
+     cex.main = 1, cex.lab = 1, cex.axis = 1,
+     col = "darkred",
+     pch = 8)
+
+fit <- lm(sales~adv)
+abline(fit)
+
+#
+# 104. Building a clustered scatterplot
+#
+
+adv <- rnorm(30, 400, 200)
+sales <- rnorm(30, 4000, 1000)
+
+sector <- sample(1:3, 30, replace = TRUE)
+sector2 <- factor(sector, levels = c(1, 2, 3),
+                  labels = c("Manufacturing", "Services", "Retail"))
+
+plot(sales~adv, col = sector2, pch = 16)
+
+legend(x = 850, y = 4200,
+       legend = levels(sector2), col = 1:3,
+       pch = 16, cex = 0.5)
+
+plot(sales~adv, col = sector2, pch = 16)
+legend(x = 850, y = 4200,
+       legend = levels(sector2), col = 1:3,
+       lty = "solid", cex = 0.5)
+
+#
+# 105. Plotting a line chart
+#
+
+years <- 2007:2016
+profit <- c(73, 100, 85, 115, 140, 165, 120, 150, 195, 190)
+
+plot(profit~years, type = "l")
+plot(years, profit, type = "l")
+
+plot(profit~years, type = "l",
+     main = "Profit Chart",
+     xlab = "Year", ylab = "Profit in Thousands")
+
+#
+# 106. Setting the line parameters
+#
+
+years <- 2007:2016
+profit <- c(73, 100, 85, 115, 140, 165, 120, 150, 195, 190)
+
+plot(profit~years, type = "l",
+     main = "Profit Chart",
+     xlab = "Year", ylab = "Profit in Thousands",
+     col = "red")
+
+plot(profit~years, type = "l",
+     main = "Profit Chart",
+     xlab = "Year", ylab = "Profit in Thousands",
+     col = "red", lty = 5)
+
+plot(profit~years, type = "l",
+     main = "Profit Chart",
+     xlab = "Year", ylab = "Profit in Thousands",
+     col = "red", lty = 1, lwd = 3)
+
+fit <- lm(profit~years)
+fit
+abline(fit)
+
+plot(profit~years, type = "s")
+plot(profit~years, type = "S")
+
+#
+# 107. Overplotting lines and dots
+#
+
+years <- 2007:2016
+profit <- c(73, 100, 85, 115, 140, 165, 120, 150, 195, 190)
+
+plot(profit~years, type = "b",
+     main = "Profit Chart",
+     xlab = "Year", ylab = "Profit in Thousands",
+     col = "red", lty = 1, lwd = 2)
+
+plot(profit~years, type = "o",
+     main = "Profit Chart",
+     xlab = "Year", ylab = "Profit in Thousands",
+     col = "red", lty = 1, lwd = 2)
+
+plot(profit~years, type = "o", pch = 8, 
+     cex = 1.5, lty = 3, lwd = 2, col = "darkblue")
+
+#
+# 108. Plotting two lines in the same chart
+#
+
+years <- 2007:2016
+profitA <- c(73, 100, 85, 115, 140, 165, 120, 150, 195, 190)
+profitB <- c(60, 95, 125, 170, 120, 140, 165, 180, 170, 185)
+
+plot(profitA~years, type = "l", col = "red", lwd = 2)
+lines(profitB~years, type = "l", col = "blue", lwd = 2)
+legend(x = 2012,
+       y = 115,
+       legend = c("Company A", "Company B"),
+       col = c("red", "blue"),
+       lty = 1,
+       cex = 0.6,
+       title = "Profit")
+
+#
+# 109. Plotting bar charts
+#
+
+country <- c("Germany", "Switzerland", "Italy", "Portugal")
+wage <- c(44900, 58300, 34100, 24100)
+
+barplot(wage, names = country)
+
+barplot(wage, names = country, 
+        main = "Average Wage by Country",
+        xlab = "Countries",
+        ylab = "Average Wage",
+        cex.main = 1.1,
+        ylim = c(0,58300))
+
+#
+# 110. Setting the bar parameters
+#
+
+barplot(wage, names = country, col = "red")
+barplot(wage, names = country, col = c("red", "green"))
+barplot(wage, names = country, col = c("red", "green", "violet", "orange"))
+
+barplot(wage, names = country, 
+        col = "red",
+        border = "darkgreen")
+
+barplot(wage, names = country, 
+        col = "red",
+        space = 0)
+barplot(wage, names = country, 
+        col = "red",
+        space = 0.125)
+barplot(wage, names = country, 
+        col = "red",
+        space = 5)
+
+#
+# 111. Plotting Histograms
+#
+
+x <- sample(500, 200, replace = TRUE)
+hist(x)
+
+y <- rnorm(200)
+hist(y)
+
+hist(y, main = "Histogram Example")
+hist(y, main = "Histogram Example",
+     col = "red")
+hist(y, main = "Histogram Example",
+     col = "red", border = "darkgreen")
+
+hist(y, main = "Histogram Example",
+     col = "red", breaks = 50)
+hist(y, main = "Histogram Example",
+     col = "red", breaks = 5)
+
+hist(y, main = "Histogram Example",
+     col = "red", border = "darkgreen",
+     freq = FALSE)
+
+#
+# 112. Plotting density lines
+#
+
+x <- rnorm(200)
+dx <- density(x)
+plot(dx)
+
+plot(dx, main = "Density Line",
+     xlab = "x", ylab = "Frequency",
+     col = "red")
+plot(dx, main = "Density Line",
+     xlab = "x", ylab = "Frequency",
+     col = "red", lwd = 4)
+plot(dx, main = "Density Line",
+     xlab = "x", ylab = "Frequency",
+     col = "red", lwd = 4, lty = 2)
+
+y <- rnorm(200)
+dy <- density(y)
+
+plot(dx, main = "Density Line",
+     xlab = "x", ylab = "Frequency",
+     col = "red", lwd = 2, lty = 1)
+lines(dy, col = "darkgreen", lwd = 2, lty = 2)
+
+#
+# 113. Plotting pie charts
+#
+
+country <- c("Germany", "Switzerland", "Italy", "Portugal")
+wage <- c(44900, 58300, 34100, 24100)
+
+pie(wage)
+pie(wage, labels = country)
+
+pie(wage, labels = country,
+    col = c("red", "green", "blue", "orange"))
+
+pie(wage, labels = country,
+    col = c("red", "green", "blue", "orange"),
+    main = "Average Wages per Country")
+
+pie(wage, labels = country,
+    col = c("red", "green", "blue", "orange"),
+    main = "Average Wages per Country",
+    cex.main = 0.9, cex = 0.8)
+
+perc <- 100 * (wage / sum(wage))
+perc <- round(perc, 0)
+labels <- paste(country, perc)
+labels
+labels <- paste0(labels, "%")
+labels
+pie(wage, labels = labels)
+
+pie(wage, labels = country,
+    col = c("red", "green", "blue", "orange"),
+    main = "Average Wages per Country", edges = TRUE)
+
+#
+# 114. Plotting boxplot charts
+#
+
+x <- rnorm(100)
+x
+boxplot(x)
+boxplot(x, col = "red")
+boxplot(x, col = "red",
+        main = "Boxplot",
+        xlab = "x", ylab = "Values")
+
+category <- sample(1:2, 100, replace = TRUE)
+category
+
+boxplot(x~category, col = "red")
+boxplot(x~category, col = c("red", "green"))
+
+boxplot(x~category, col = "red", notch = TRUE)
+boxplot(x~category, col = c("red", "green"), notch = TRUE)
+
+#
+# 115. Plotting functions
+#
+
+f <- function (x) { x ^ 2 + x + 1 }
+
+plot(f)
+
+plot(f, xlim = c(-100, 100))
+
+plot(f, xlim = c(-100, 100),
+     col = "red", lwd = 2)
+
+f2 <- function (x) { (exp(x) + 1)/(x - 1) }
+
+plot(f2, xlim = c(-5, 5))
+
+#
+# 116. Exporting charts
+#
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
