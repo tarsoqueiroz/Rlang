@@ -281,12 +281,65 @@ pt(1.5, 8, lower.tail = FALSE)
 # P[X<x] - pt()
 # P[X>x] - lower.tail = FALSE
 
+#
+# Questionário
+#
+
+# Pergunta 1: Executando a função sample, como no código abaixo
+#             sample(2, 10, replace = F, prob=c(0.2,0.8))
+#             obtemos um erro. Qual alternativa melhor explica o motivo de ter ocorrido o erro?
+sample(2, 10, replace = F, prob=c(0.2,0.8))
+?sample
+sample(12, 10, replace = F, prob=c(1/12,1/12,1/12,1/12,1/12,1/12,1/12,1/12,1/12,1/12,1/12,1/12))
+sample(2, 10, replace = T, prob=c(0.2,0.8))
+# R) Estamos tentando gerar 10 números aleatório de 2 números, sem reposição
+
+# Pergunta 2: Dado o conjunto de dados:
+#             22,10,12,14,13,15
+#             Qual alternativa apresenta a resposta correta para a mediana destes dados?
+median(c(22,10,12,14,13,15))
+# R) 13.5
+
+# Pergunta 3: Em um baralho comum, qual a probabilidade de você escolher uma carta aleatoriamente, e ser do naipe de Espadas?
+# R) 13/52 - 13 chances em 52 13/ 52 = 0,25
+13/52
+
+# Pergunta 4: Jogando uma moeda 10 vezes, quais as chances de dar cara 8 vezes?
+# R) dbinom(8,10,0.5)
+dbinom(8, 10, 0.5)
+?dbinom
+
+# Pergunta 5: Os preços de diversos modelos de celulares no estoque de uma loja são normalmente distribuídos, 
+#             com média = 1250 e desvio padrão igual a 480.
+#             Qual a chance de escolher aleatoriamente um aparelho que custe menos que 1500? 
+# R) pnorm(1500,1250,480) [1] 0.6987586
+pnorm(1500, 1250, 480)
+
+# Pergunta 6: Uma notícia informa que entre 34% e 38% dos entrevistados não gostam de peixe.
+#             Qual a margem de erro desta pesquisa?
+# R) (38 - 34) / 2
+  
+# Pergunta 7: Qual afirmação é falsa com relação a teste de hipótese?
+# R) A hipotese alternativa é por padrão, verdadeira
+
+# Pergunta 8: Das condições para o uso da distribuição T de Student, qual é falsa?
+# R) Se conhece o desvio padrão da população (FALSA)
+
+# Pergunta 9: Qual opção abaixo, não é uma alternativa para analisar se uma distribuição de dados está normalmente distribuída?
+# R) Diagrama de dispersão
+
+# Pergunta 10: Qual alternativa abaixo melhor descreve o papel da estatística descritiva?
+# R) Demonstrar dados através de resumos e gráficos
 
 
 
 
 
 
+
+
+  
+  
 
 
 
