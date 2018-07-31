@@ -41,6 +41,7 @@ custo
 plot(idade~custo)
 modidadecusto <- lm(idade~custo)
 abline(modidadecusto)
+modidadecusto
 # Outliers - valores muito fora dos padrões
 # Extrapolação - valores para elementos fora dos elementos que compõem a amostra
 
@@ -122,25 +123,81 @@ prevereleicao$RESULT <- predict(modelo, newdata = prevereleicao, type = "respons
 prevereleicao$RESULT
 View(prevereleicao)
 
+#
+# Questionário
+#
+
+# Pergunta 1: Uma correlação de -0,75 é:
+# R) Negativa e forte
+
+# Pergunta 2: Sendo a correlação igual a -0,89, qual será o coeficiente de determinação?
+(-0.89)^2
+# R) 0,7921
+
+# Pergunta 3: O coeficiente de determinação entre duas variáveis é igual a 0,73.
+#             Qual opção abaixo melhor descreve este coeficiente?
+# R)          73% da variável dependente consegue ser explicada pelas variáveis
+#             explanatórias presentes no modelo
+
+# Pergunta 4: Observando a linha de regressão no gráfico de dispersão abaixo, 
+#             escolha a alternativa correta:
+#
+#             |.
+#             |  . 
+#             |    .
+#             |      .
+#             |        .
+#             |          .
+#             .____________.__
+# R)          Correlação Negativa
+
+# Pergunta 5: Qual opção melhor descreve o conceito de inclinação da reta na regressão linear?
+# R)          A cada unidade de aumento de X, a variável de resposta aumenta (ou diminui) 
+#             o valor da inclinação
+  
+# Pergunta 6: Dada as variáveis 
+#             X = 15,18,20,25,30,44
+#             Y = 240,255,270,283,300,310
+#             Calcule a coeficiente de correlação.
+eixoX <- c(15,18,20,25,30,44)
+eixoY <- c(240,255,270,283,300,310)
+cor(eixoX, eixoY, method = "pearson")
+# R)          x = c(15,18,20,25,30,44) 
+#             y = c(240,255,270,283,300,310) 
+#             cor(x,y) [1] 0.9237806
 
 
+# Pergunta 7: No R existe nativamente o conjunto de dados women (mulheres), com os atributos  
+#             height e weight (altura e peso, em polegadas e libras respectivamente)
+#             Usando regressão linear, preveja a altura de uma mulher com peso = 30
+mulheres <- women
+View(mulheres)
+cor(mulheres)
+cor(women)
+modelo <- lm(height~weight, data = women)
+modelo
+predict(modelo, data.frame(weight = 30))
+# R)          modelo = lm(height ~ weight, data=women) 
+#             predict(modelo, data.frame(weight=30)) ## 34.34093
 
+# Pergunta 8: Marque a alternativa falsa:
+# R)          Uma correlação = 1,9 é positiva e forte (varia entre -1 e 1)
 
+# Pergunta 9: Em uma temperatura de 2 graus centigrados, uma loja vende em média 10 casacos.
+#             Em um modelo de regressão linear, a inclinação da reta é igual a -3.
+#             Considerando que neste problema existe uma correlação negativa e consequentemente
+#             a linha de regressão esta inclinada para a esquerda, quantos casacos serão vendidos
+#             com uma temperatura de 3 grau centigrados?
+# R)          2 --> 3   10 --> 10 -3 = 7
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Pergunta 10: Observando a linha de regressão no gráfico abaixo, qual opção melhor representa 
+#              o provável valor da interseção desta linha?
+#
+#             |         .
+#             |        .
+#             |       .
+#             |      .
+#             |     .   
+#             |    .      
+#             .___.___________
+# R)           -12 
