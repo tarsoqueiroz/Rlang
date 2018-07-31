@@ -61,27 +61,31 @@ outlier(iris$Sepal.Width, opposite = T)
 # Questionário
 #
 
-# 
+# Pergunta 1: Marque a opção que não faz parte dos objetivos da analise de dados exploratória
+# R)          Prever o valor de ações na bolsa de valores
 
+# Pergunta 2: Em média ocorrem 10 mortes por mês em um hospital.
+#             Qual a probabilidade de, em um determinado mês, ocorrerem 12 mortes?
+dpois(12, lambda = 10)
+# R)          dpois(12,lambda=10) [1] 0.09478033
 
+# Pergunta 3: Na imagem abaixo, quantas anomalias inferiores foram encontradas?
+# R)          Uma
 
+# Pergunta 4: Você precisa estudar o comportamento de homens e mulheres com relação a jogo de azar.
+#             Você faz uma pesquisa e tabula os seguintes resultados, para fazer um teste de qui quadrado.
+#             Qual o valor de p obtido com a tabulação destes dados?
+jogodeazar <- matrix(c(41,34,18,7), nrow = 2, byrow = T)
+jogodeazar
+rownames(jogodeazar) <- c("Masculino", "Feminino")
+colnames(jogodeazar) <- c("Joga", "NaoJoga")
+jogodeazar
+chisq.test(jogodeazar)
+# R)          jogo = matrix(c(41,34,18,7),nrow=2, byrow=T) 
+#             rownames(jogo) = c("Masculino","Feminino") 
+#             colnames(jogo) = c("Joga","NaoJoga")
+#             chisq.test(jogo)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Pergunta 5: Quando devemos utilizar a analise de variância (Anova) em vez de um Teste T 
+#             para analisar a variação de médias?
+# R)          Quando temos mais de dois grupos
