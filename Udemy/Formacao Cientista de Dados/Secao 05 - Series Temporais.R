@@ -61,8 +61,25 @@ plot(previsao)
 # Questionário
 #
 
-# 
+# Pergunta 1: Entre os motivos para analisar dados temporais, qual opção é falsa?
+# R)          Buscar relação de causa e efeito
 
+# Pergunta 2: Entre os componentes de uma série temporal, um deles mostra qual a propensão 
+#             dos dados em intervalos de tempos futuros. Qual componente é este?
+# R)          Tendência
+
+# Pergunta 3: Qual componente, em um serie temporal, não pode ser explicado através de uma
+#             equação/fórmula?
+# R)          Aleatoriedade
+
+# Pergunta 4: Os gráficos na imagem, mostram, respectivamente, quais componentes de uma 
+#             série temporal?
+# R)          Tendência, sazonalidade, aleatório
+
+# Pergunta 5: Qual afirmação é verdadeira sobre a diferença entre series temporais 
+#             estocásticas e determinísticas?
+# R)          Estocásticas possuem um componente aleatório, o que torna sua previsão mais difícil. 
+#             As determinísticas podem ser explicadas por uma função.
 
 
 
