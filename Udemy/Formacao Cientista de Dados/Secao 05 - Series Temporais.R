@@ -57,6 +57,40 @@ previsao <- forecast(arima, h=12)
 previsao
 plot(previsao)
 
+#
+# Questionário
+#
+
+# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
