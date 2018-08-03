@@ -51,7 +51,7 @@ x #erro
 1:20
 
 x<- 20:30
-
+x
 
 # [] dá acesso aos elementos de um objeto
 
