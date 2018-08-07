@@ -143,6 +143,67 @@ taxaacerto # 77,38% com alguns atributos
 taxaerro <- (confusao[2] + confusao[3]) / sum(confusao)
 taxaerro
 
+# Agrupamentos
+
+# kmeans
+iris
+dim(iris)
+head(iris)
+summary(iris)
+
+cluster <- kmeans(iris[1:4], centers = 3)
+cluster
+
+table(iris$Species, cluster$cluster)
+cluster$cluster
+
+plot(iris[1:4], col = cluster$cluster)
+
+# Fuzzy c-means
+library(e1071)
+cluster <- cmeans(iris[1:4], centers = 3)
+cluster
+
+table(iris$Species, cluster$cluster)
+
+# K-medoids
+#install.packages('cluster', dependencies = T)
+library(cluster)
+
+cluster <- pam(iris[1:4], k = 3)
+cluster
+
+plot(cluster)
+table(iris$Species, cluster$clustering)
+
+# Regras de associação - apriori
+#install.packages("arules", dependencies = T)
+library(arules)
+
+transacoes <- read.transactions(file.choose(), format = 'basket', sep = ",")
+transacoes
+
+inspect(transacoes)
+image(transacoes)
+
+regras <- apriori(transacoes, parameter = list(supp=0.5, conf=0.5))
+regras
+inspect(regras)
+
+#install.packages('arulesViz')
+plot(regras)
+plot(regras, mothod='graph', control=list(type="itens"))
+
+# Regras de associação - eclad
+#install.packages("arules", dependencies = T)
+library(arules)
+
+transacoes <- read.transactions(file.choose(), format = 'basket', sep = ",")
+image(transacoes)
+
+regras <- eclat(transacoes, parameter = list(supp=0.1, maxlen=15))
+inspect(regras)
+plot(regras, method='graph', control=list(type='itens'))
 
 
 
