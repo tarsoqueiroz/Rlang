@@ -205,13 +205,93 @@ regras <- eclat(transacoes, parameter = list(supp=0.1, maxlen=15))
 inspect(regras)
 plot(regras, method='graph', control=list(type='itens'))
 
+#
+# Questionário 05
+#
 
+# Pergunta 01: Com relação ao aprendizado de Máquina, marque a opção falsa:
+# R)           É um processo natural
 
+# Pergunta 02: Marque a opção que melhor representa áreas de conhecimento que usam Machine Learning
+# R)           Todas as alternativas
 
+# Pergunta 03: Em Machine Learning, como é chamado um conjunto de dados que contém eventos, naturais
+#              ou não, que se quer minerar?
+# R)           Relação
 
+# Pergunta 04: Quanto o a classe de uma relação, qual afirmação é falsa?
+# R)           A classe não é um atributo
 
+# Pergunta 05: Sobre Naive Bayes, é correto afirmar:
+# R)           É um algoritmo de classificação
 
+# Pergunta 06: Das tarefas de Machine Learning abaixo, marque a que não é supervisionada
+# R)           Agrupamento
 
+# Pergunta 07: Qual alternativa abaixo melhor descreve um modelo de Machine Learning?
+# R)           Uma referência, criada através de um algoritmo, de como novos dados devem ser classificados
 
+# Pergunta 08: Quando estamos preparando nosso modelo, devemos usar um conjunto de dados ainda não 
+#              conhecido pelo modelo para testa-lo. Qual opção abaixo melhor justifica esta afirmação?
+# R)           O objetivo é criar modelos genéricos, e por isso devemos testar o modelo com dados que ele
+#              ainda "desconhece"
 
+# Pergunta 09: Observando  a matriz de confusão abaixo, marque a opção com a correta taxa de acertos do 
+#              modelo.
+(50 + 45 + 43) / 150
+# R)           .92 ou 92%
 
+# Pergunta 10: O Analista de Negócios reclama que a campanha de marketing foi um fracasso, pois quase 
+#              nenhum cliente aderiu a promoção. Você fica surpreso pois o modelo que a equipe criou tinha
+#              um alto desempenho. O que provavelmente ocorreu?
+# R)           Super ajuste
+
+#
+# Questionário 6
+#
+
+# Pergunta 01: Um algoritmo de Machine Learning classifica clientes como potencias fraudadores de compra
+#              de crédito de celular pré-pago.
+#              O valor do crédito é de R$ 15,00.
+#              No teste do modelo houve 5% de falsos positivos.
+#              Com esse modelo em produção e com a venda de créditos para 100.000 clientes, qual seria o
+#              provável custo do modelo?
+15 * 100000 * 0.05
+# R)           75.000
+
+# Pergunta 02: Marque a alternativa que não é uma opção que podemos tentar na busca de um melhor modelo 
+#              de Machine Learning
+# R)           Incluindo uma grande quantidade de novos atributos ao modelo
+
+# Pergunta 03: Qual opção abaixo é verdadeira com relação a Aprendizado Baseado em Instância?
+# R)           Não usa um modelo, classifica novas instância pela semelhança
+
+# Pergunta 04: Observando a figura abaixo, que tipo de algoritmo de agrupamentos foi utilizado?
+# R)           Hierárquico
+
+# Pergunta 05: Qual afirmação abaixo é falsa com relação ao algoritmo de agrupamentos DBSCAN?
+# R)           Agrupa todos os elementos, não gera ruídos (Não agrupados)
+
+# Pergunta 06: Qual opção abaixo é falsa com relação ao algoritmo de agrupamento K-Means?
+# R)           É baseado em um medóide: ponto mais representativo
+
+# Pergunta 07: Observe a imagem abaixo, onde cada linha representa um carrinho de compras de um cliente.
+#              Considerando a afirmação: "Quem compra Maça também compra Cerveja", marque a alternativa
+#              que representa, respectivamente,  o suporte e a confiança dessa transação.
+suporte <- 2 / 3
+confianca <- 2 / 2
+# R)           0.66 e 1
+
+# Pergunta 08: Sobre regras de associação, a frase:
+#              "Numero de transações que contem todos os itens da transação"
+#              É a definição para?
+# R)           Suporte
+
+# Pergunta 09: A sentença:
+#              "Proporção de vezes que, em uma transação contendo o elemento A, também tem o elemento B"
+#              é a definição para:
+# R)           Confiança
+
+# Pergunta 10: Considerando transações A e B e B e A
+#              Qual alternativa podemos afirmar que é verdadeira?
+# R)           O suporte das duas transações deve ser o mesmo
