@@ -14,6 +14,7 @@ custo <- c(871,1132,1242,1356,1488,1638,2130,2454,3066,4090)
 length(idade)
 length(custo)
 ?plot
+plot(custo~idade, type = 'l')
 
 # Regressão Linear
 
@@ -38,7 +39,9 @@ R2 <- R ^2
 idade
 custo
 
-plot(idade~custo)
+plot(idade~custo, type = 'l')
+plot(custo~idade, type = 'l')
+?lm
 modidadecusto <- lm(idade~custo)
 abline(modidadecusto)
 modidadecusto
@@ -201,3 +204,29 @@ predict(modelo, data.frame(weight = 30))
 #             |    .      
 #             .___.___________
 # R)           -12 
+
+
+#
+# From help of lm (linear models command)
+#
+require(graphics)
+## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
+## Page 9: Plant Weight Data.
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+View(group)
+weight <- c(ctl, trt)
+View(weight)
+lm.D9 <- lm(weight ~ group)
+View(lm.D9)
+lm.D90 <- lm(weight ~ group - 1) # omitting intercept
+View(lm.D90)
+anova(lm.D9)
+summary(lm.D90)
+
+opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
+plot(lm.D9, las = 1)      # Residuals, Fitted, ...
+par(opar)
+
+### less simple examples in "See Also" above
