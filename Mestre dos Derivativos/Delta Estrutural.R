@@ -2,6 +2,9 @@
 # Ensaio para curva de Delta Estrutural
 #
 
+#install.packages("ggplot2")
+library(ggplot2)
+
 callBuy <- function(nValStock, nValStrike) { 
   ifelse (nValStrike < nValStock, nValStock - nValStrike, 0)
 }
@@ -94,10 +97,56 @@ plot(x = lStock,
      xlab = "Value of Stock",
      ylab = "Delta")
 
-lHA <- (callSell(lStock, 17.5) + callBuy(lStock, 18.5) * 1.3)
+lStock <- seq(17, 31, by=0.01)
+lHA <- (callSell(lStock, 18) + callBuy(lStock, 19) * 1.3)
 plot(x = lStock,
      y = lHA, 
      type = 'l', 
      main = "Structural Delta",
      xlab = "Value of Stock",
      ylab = "Delta")
+dfHA <- data.frame(Stock=lStock, Delta=lHA)
+View(dfHA)
+ggplot(dfHA, aes(Stock, Delta))+
+  geom_line()
+
+lStock <- seq(17, 21, by=0.01)
+lTA <- (callBuy(lStock, 18) + callSell(lStock, 20))
+plot(x = lStock,
+     y = lTA, 
+     type = 'l', 
+     main = "Structural Delta of TA",
+     xlab = "Value of Stock",
+     ylab = "Delta")
+
+dfTA <- data.frame(Stock=lStock, Delta=lTA)
+ggplot(dfTA, aes(Stock, Delta))+
+  geom_line()
+
+lStock <- seq(15, 30, by=0.01)
+lRatio <- (callBuy(lStock, 20) + callSell(lStock, 23) * 2 + callBuy(lStock, 24))
+plot(x = lStock,
+     y = lRatio, 
+     type = 'l', 
+     main = "Structural Delta of TA",
+     xlab = "Value of Stock",
+     ylab = "Delta")
+
+dfRatio <- data.frame(Stock=lStock, Delta=lRatio)
+ggplot(dfRatio, aes(Stock, Delta))+
+  geom_line()
+
+lStock <- seq(15, 30, by=0.01)
+lRatio <- (callBuy(lStock, 20) + callSell(lStock, 23) * 2 + callBuy(lStock, 24) +
+           callBuy(lStock, 21) + callSell(lStock, 22) * 2 + callBuy(lStock, 25) +
+           callBuy(lStock, 22) + callSell(lStock, 25) * 2 + callBuy(lStock, 26))
+plot(x = lStock,
+     y = lRatio, 
+     type = 'l', 
+     main = "Structural Delta of TA",
+     xlab = "Value of Stock",
+     ylab = "Delta")
+
+dfRatio <- data.frame(Stock=lStock, Delta=lRatio)
+ggplot(dfRatio, aes(Stock, Delta))+
+  geom_line()
