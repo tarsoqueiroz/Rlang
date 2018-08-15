@@ -80,6 +80,73 @@ image(dig, col=grey.colors(255))
 close.screen(all = T)
 image(dig, col=grey.colors(255))
 
+# 
+# install.packages("h2o")
+library(h2o)
+
+h2o.init()
+
+treino <- h2o.importFile(file.choose())
+teste <- h2o.importFile(file.choose())
+dim(treino)
+head(treino)
+dim(teste)
+
+treino[, 785] = as.factor(treino[, 785])
+teste[, 785] = as.factor(teste[, 785])
+
+modelo <- h2o.deeplearning(x = colnames(treino[, 1:784]), 
+                           y = "C785", 
+                           training_frame = treino, 
+                           validation_frame = teste, 
+                           distribution = "AUTO", 
+                           activation = "RectifierWithDropout", 
+                           hidden = c(64,64,64), 
+                           sparse = TRUE, 
+                           epochs = 20)
+plot(modelo)
+
+h2o.performance(modelo)
+
+treino[20, 785] # [1] 4
+pred <- h2o.predict(modelo, newdata = treino[20, 1:784])
+pred$predict # predict 4
+
+#
+# Questionário 7
+#
+
+# Pergunta 1: Assim como neurônios naturais, neurônios artificiais possuem uma função de ativação. 
+#             Qual opção abaixo melhor descreve o objetivo dessa função?
+# R)          Verificar se a entrada do neurônio atingiu um limiar (um parâmetro mínimo). Em caso
+#             positivo, o neurônio gera uma sinapse com outro neurônio.
+
+# Pergunta 2: Na imagem abaixo, qual opção tem a nomenclatura correta do elemento em vermelho em 
+#             uma rede neural?
+# R)          Sinapse
+
+# Pergunta 3: Considerando que a função mod extrai o decimal do resultado de uma divisão, qual é 
+#             a função do Neurônio Artificial abaixo?
+# R)          Calcular se o número é par
+
+# Pergunta 4: Das alternativas abaixo, qual é a melhor definição para Backpropagation?
+# R)          Cálculo de erro que é utilizado para ajustar os pesos nas entradas para tentar
+#             melhorar a performance da rede
+
+# Pergunta 5: Qual opção melhor descreve o funcionamento de Convolutional Neural Networks?
+# R)          No processo de aprendizado, características dos objetos formam filtros, que na
+#             classificação são utilizados para buscar estas mesmas características em novas
+#             imagens. Quanto mais características de um objeto forem identificadas, maiores
+#             as chances de classificação com aquela classe.
+
+
+
+
+
+
+
+
+
 
 
 
