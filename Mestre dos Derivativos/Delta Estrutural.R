@@ -150,3 +150,32 @@ plot(x = lStock,
 dfRatio <- data.frame(Stock=lStock, Delta=lRatio)
 ggplot(dfRatio, aes(Stock, Delta))+
   geom_line()
+
+
+
+lStock <- seq(17, 25, by=0.01)
+
+lRatio15J21 <- (callBuy(lStock, 18) + callSell(lStock, 21) * 2 + callBuy(lStock, 22))
+lRatio15J22 <- (callBuy(lStock, 19) + callSell(lStock, 22) * 2 + callBuy(lStock, 23))
+lRatio15J23 <- (callBuy(lStock, 20) + callSell(lStock, 23) * 2 + callBuy(lStock, 24))
+
+lRatio15All <- (lRatio15J21 + lRatio15J22 + lRatio15J23)
+
+dfRatio <- data.frame(Stock=lStock, 
+                      DeltaR15J21=lRatio15J21, 
+                      DeltaR15J22=lRatio15J22, 
+                      DeltaR15J23=lRatio15J23, 
+                      DeltaR15All=lRatio15All)
+ggplot(dfRatio, aes(Stock))+
+  geom_line(aes(y = DeltaR15J21, colour = 'RT15 miolo J21')) +
+  geom_line(aes(y = DeltaR15J22, colour = 'RT15 miolo J22')) +
+  geom_line(aes(y = DeltaR15J23, colour = 'RT15 miolo J23')) +
+  geom_line(aes(y = DeltaR15All, colour = 'Malha')) + 
+  theme(plot.title   = element_text(color="red",     size=18, face="bold"),
+        axis.title.x = element_text(color="blue",    size=14, face="bold"),
+        axis.title.y = element_text(color="blue",    size=14, face="bold")) +
+  labs(title = "Delta Estrutural",
+       x = "Ação",
+       y = "Delta",
+       colour = "Estruturas")
+  
