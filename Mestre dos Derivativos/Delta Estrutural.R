@@ -150,3 +150,96 @@ plot(x = lStock,
 dfRatio <- data.frame(Stock=lStock, Delta=lRatio)
 ggplot(dfRatio, aes(Stock, Delta))+
   geom_line()
+
+
+#
+# Iron Condor
+#
+lStock <- seq(12, 17, by=0.01)
+lIronCondor <- (callBuy(lStock, 15) + callSell(lStock, 16) +
+                  putBuy(lStock, 14)  + putSell(lStock, 13))
+plot(x = lStock,
+     y = lIronCondor, 
+     type = 'l', 
+     main = "Structural Delta of Iron Condor",
+     xlab = "Value of Stock",
+     ylab = "Delta")
+
+dfIronCondor <- data.frame(Stock=lStock, Delta=lIronCondor)
+ggplot(dfIronCondor, aes(Stock, Delta))+
+  geom_line()
+
+#
+# Iron Butterfly
+#
+lStock <- seq(13, 17, by=0.01)
+lIronBB <- (callBuy(lStock, 15) + callSell(lStock, 16) +
+              putBuy(lStock, 15)  + putSell(lStock, 14))
+plot(x = lStock,
+     y = lIronBB, 
+     type = 'l', 
+     main = "Structural Delta of Iron Condor",
+     xlab = "Value of Stock",
+     ylab = "Delta")
+
+dfIronBB <- data.frame(Stock=lStock, Delta=lIronBB)
+ggplot(dfIronBB, aes(Stock, Delta))+
+  geom_line()
+
+#
+# Box
+#
+lStock <- seq(14, 17, by=0.01)
+lDelta <- (callBuy(lStock, 15) + callSell(lStock, 16) +
+           putBuy(lStock, 16)  + putSell(lStock, 15))
+plot(x = lStock,
+     y = lDelta, 
+     type = 'l', 
+     main = "Structural Delta of Box",
+     xlab = "Value of Stock",
+     ylab = "Delta")
+
+dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
+ggplot(dfDelta, aes(Stock, Delta))+
+  geom_line()
+
+#
+# Malha de Ratio
+#
+dfDelta <- data.frame(Stock=seq(17, 25, by=0.01))
+dfDelta <- data.frame(dfDelta, 
+                      DeltaRT15m21=(callBuy (dfDelta$Stock, 18) + 
+                                    callSell(dfDelta$Stock, 21) * 2 +
+                                    callBuy (dfDelta$Stock, 22)), 
+                      DeltaRT15m22=(callBuy (dfDelta$Stock, 19) + 
+                                    callSell(dfDelta$Stock, 22) * 2 +
+                                    callBuy (dfDelta$Stock, 23)), 
+                      DeltaRT15m23=(callBuy (dfDelta$Stock, 20) + 
+                                    callSell(dfDelta$Stock, 23) * 2 +
+                                    callBuy (dfDelta$Stock, 24)))
+dfDelta <- data.frame(dfDelta, 
+                      DeltaMalhaRT212223=(dfDelta$DeltaRT15m21+
+                                          dfDelta$DeltaRT15m22+
+                                          dfDelta$DeltaRT15m23))
+head(dfDelta)
+
+ggplot(dfDelta, aes(x=Stock))+
+  geom_line(aes(y=DeltaRT15m21,       colour='RT15 miolo 21')) +
+  geom_line(aes(y=DeltaRT15m22,       colour='RT15 miolo 22')) +
+  geom_line(aes(y=DeltaRT15m23,       colour='RT15 miolo 23')) + 
+  geom_line(aes(y=DeltaMalhaRT212223, colour='Malha'), size = 2) +
+  xlim(c(17, 25)) +
+  ylim(c( 0,  7)) +
+  labs(title="Malha de Ratio",
+       subtitle="Miolos em 21, 22 e 23",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")+
+  scale_color_discrete(name="Ratios")
+
+plot(x = dfDelta$Stock,
+     y = lDelta, 
+     type = 'l', 
+     main = "Structural Delta of Box",
+     xlab = "Value of Stock",
+     ylab = "Delta")
