@@ -187,11 +187,22 @@ ggplot(dfIronBB, aes(Stock, Delta))+
   geom_line()
 
 #
+# Ratio 20%
+#
+lStock <- seq(15, 24, by=0.01)
+lDelta <- (callBuy(lStock, 16) + 
+           callSell(lStock, 20) * 2 +
+           callBuy(lStock, 22))
+dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
+ggplot(dfDelta, aes(Stock, Delta))+
+  geom_line()
+
+#
 # Box
 #
 lStock <- seq(14, 17, by=0.01)
 lDelta <- (callBuy(lStock, 15) + callSell(lStock, 16) +
-           putBuy(lStock, 16)  + putSell(lStock, 15))
+             putBuy(lStock, 16)  + putSell(lStock, 15))
 plot(x = lStock,
      y = lDelta, 
      type = 'l', 
