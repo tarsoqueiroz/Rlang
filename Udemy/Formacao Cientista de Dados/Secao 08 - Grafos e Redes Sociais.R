@@ -5,12 +5,6 @@
 #
 
 # 
-#
-#
-# Questionário 8
-#
-
-# 
 install.packages('igraph')
 library(igraph)
 
@@ -130,6 +124,101 @@ distances(dist, V(dist)$name == "A", V(dist)$name == "H")
 caminho <- shortest_paths(dist, V(dist)$name == "A", V(dist)$name == "H", output = c("both"))
 caminho
 caminho$vpath
+
+
+for (i in 1:length(V(dist))) {
+  V(dist)$color[i] <- ifelse(i %in% as.vector(unlist(caminho$vpath)), "green", "gray")
+}
+for (i in 1:length(E(dist))) {
+  E(dist)$color[i] <- ifelse(i %in% as.vector(unlist(caminho$epath)), "green", "gray")
+}
+plot(dist, edge.label = E(dist)$weight)
+
+
+comum <- cluster_edge_betweenness(grafo8)
+comum
+comum$membership
+plot(grafo8, vertex.color = comum$membership)
+
+comun <- cluster_edge_betweenness(dist)
+comun
+comun$membership
+plot(dist, vertex.color = comun$membership, edge.color = 'gray')
+
+cli = cliques(as.undirected(grafo8), min=4)
+length(cli)
+cli
+
+#
+#
+#
+#install.packages('igraphdata')
+library(igraphdata)
+
+data(Koenigsberg)
+plot(Koenigsberg)
+degree(Koenigsberg, mode = 'all')
+
+data(kite)
+plot(kite)
+
+data(UKfaculty)
+plot(UKfaculty)
+comun = cluster_edge_betweenness(UKfaculty)
+plot(comun, UKfaculty)
+
+# 
+#
+#
+# Questionário 8
+#
+
+# Pergunta  1: Dado o grafo na imagem abaixo, marque a opção que apresenta o valor correto 
+#              para seu n (número de vértices):
+# Resposta  1: 10
+
+# Pergunta  2: Dado o grafo da imagem abaixo, marque a opção com o valor correto para o grau do vértice A:
+# Resposta  2: 4
+
+# Pergunta  3: Dado o grafo direcionado da imagem abaixo, qual resposta contém o grau de saída do vértice A?
+# Resposta  3: 2
+
+# Pergunta  4: Observa a figura abaixo e responda:
+#              Os grafos A e B são isomórficos. A afirmação é:
+# Resposta  4: Verdadeira
+
+# Pergunta  5: Leia a sentença abaixo e responda verdadeiro ou falso:
+#              O grafo da imagem é conexo.
+# Resposta  5: ???????? Segundo slides é Conexo, mas resposta é falso
+
+# Pergunta  6: Sobre a sentença abaixo responda verdadeiro ou falso:
+#              No grafo abaixo, existe um ciclo igual a E={ (A,E) , (E,B), (B,A) }
+# Resposta  6: Verdadeiro (????) Acho que é um caminho
+
+# Pergunta  7: Sobre a sentença abaixo responda verdadeiro ou falso:
+#              No grafo abaixo, existe um caminho igual a E={ (J,H) , (H,I), (I,D) }
+# Resposta  7: Falso
+
+# Pergunta  8: Observando os grafos da imagem abaixo, qual possui maior densidade?
+# Resposta  8: A (Relação aresta/vertices)
+
+# Pergunta  9: Observando o grafo da imagem, marque a opção que apresenta a lista de arrestas corretamente.
+# Resposta  9: C - 1-4,2-1,2-3,2-4,3-1,3-2,4-1,4-2
+
+# Pergunta 10: Marque a afirmação verdadeira
+# Resposta 10: O paradoxo da amizade mostra que, em média, seus amigos tem mais conexões do que você.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
