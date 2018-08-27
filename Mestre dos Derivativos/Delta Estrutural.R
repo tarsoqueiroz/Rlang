@@ -216,12 +216,23 @@ ggplot(dfIronBB, aes(Stock, Delta))+
   geom_line()
 
 #
+# Ratio 15% - I19 J22 I230
+#
+lStock <- seq(15, 30, by=0.01)
+lDelta <- (callBuy(lStock, 18) + 
+           callSell(lStock, 22) * 2 +
+           callBuy(lStock, 23))
+dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
+ggplot(dfDelta, aes(Stock, Delta))+
+  geom_line()
+
+#
 # Ratio 20%
 #
 lStock <- seq(15, 24, by=0.01)
 lDelta <- (callBuy(lStock, 16) + 
-           callSell(lStock, 20) * 2 +
-           callBuy(lStock, 22))
+             callSell(lStock, 20) * 2 +
+             callBuy(lStock, 22))
 dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
 ggplot(dfDelta, aes(Stock, Delta))+
   geom_line()
@@ -246,23 +257,21 @@ ggplot(dfDelta, aes(Stock, Delta))+
 #
 # Malha de Ratio
 #
-dfDelta <- data.frame(Stock=seq(17, 25, by=0.01))
+dfDelta <- data.frame(Stock=seq(15, 30, by=0.01))
 dfDelta <- data.frame(dfDelta, 
                       DeltaRT15m21=(callBuy (dfDelta$Stock, 18) + 
-                                      callSell(dfDelta$Stock, 21) * 2 +
-                                      callBuy (dfDelta$Stock, 22)), 
+                                    callSell(dfDelta$Stock, 21) * 2 +
+                                    callBuy (dfDelta$Stock, 22)), 
                       DeltaRT15m22=(callBuy (dfDelta$Stock, 19) + 
-                                      callSell(dfDelta$Stock, 22) * 2 +
-                                      callBuy (dfDelta$Stock, 23)), 
+                                    callSell(dfDelta$Stock, 22) * 2 +
+                                    callBuy (dfDelta$Stock, 23)), 
                       DeltaRT15m23=(callBuy (dfDelta$Stock, 20) + 
-                                      callSell(dfDelta$Stock, 23) * 2 +
-                                      callBuy (dfDelta$Stock, 24)))
+                                    callSell(dfDelta$Stock, 23) * 2 +
+                                    callBuy (dfDelta$Stock, 24)))
 dfDelta <- data.frame(dfDelta, 
                       DeltaMalhaRT212223=(dfDelta$DeltaRT15m21+
                                             dfDelta$DeltaRT15m22+
                                             dfDelta$DeltaRT15m23))
-head(dfDelta)
-
 ggplot(dfDelta, aes(x=Stock))+
   geom_line(aes(y=DeltaRT15m21,       colour='RT15 miolo 21')) +
   geom_line(aes(y=DeltaRT15m22,       colour='RT15 miolo 22')) +
