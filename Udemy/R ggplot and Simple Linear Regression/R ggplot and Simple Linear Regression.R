@@ -10,9 +10,11 @@
 # S01C03 - tour on R and RStudio
 #
 
-# Ctrl + l
-# Scripts
-# Console
+## Ctrl + l
+## Scripts
+## Console
+## Clear screens
+## Set default directory
 
 #
 # S01C04 - vectors
@@ -34,6 +36,8 @@ x[-1]
 x[-2]
 x[-3]
 
+sequencia <- 1:1078
+
 seq(0, 15, 1)
 seq(0, 15, 5)
 
@@ -53,6 +57,10 @@ X
 X$x
 X$y
 X$s
+
+head(X)
+
+## Save and load external file
 
 #
 # S02C06 - installing ggplot
@@ -409,27 +417,163 @@ ggplot()+
              aes(x = x, y = y))
 
 #
-# S04C17 - father and son heights
+# S04C18 - father and son heights
 #
 
+#installed.packages('UsingR')
+library(UsingR)
 
+head(father.son)
 
+ggplot() +
+  geom_point(data = father.son,
+             aes(x = fheight, y = sheight))
 
+x <- c(60, 75)  ## from teacher 
+y <- c(63, 78)  ## from teacher 
+line <- data.frame(x, y)
+x <- c(60, 75)
+y <- c(62, 77)
+lineT <- data.frame(x, y)
+ggplot() +
+  geom_point(data = father.son,
+             aes(x = fheight, y = sheight)) +
+  geom_line(data = line,
+            aes(x = x, y = y),
+            color = 'blue') +
+  geom_line(data = lineT,
+            aes(x = x, y = y),
+            color = 'red')
 
+#
+# S04C20 - residual visualization
+#
 
+head(father.son)
+x <- father.son$fheight
+y <- father.son$sheight
+group <- 1:1078
+dat <- data.frame(x, y, group)
 
+y <- x + 3
+means <- data.frame(x, y, group)
+ggplot() +
+  geom_point(data = dat,
+             aes(x = x, y = y)) +
+  geom_point(data = means,
+            aes(x = x, y = y),
+            color = 'red')
 
+x <- c(50, 80)
+y <- x + 3
+line <- data.frame(x, y)
+ggplot() +
+  geom_point(data = dat,
+             aes(x = x, y = y)) +
+  geom_point(data = means,
+             aes(x = x, y = y),
+             color = 'red') +
+  geom_line(data = line,
+            aes(x = x, y = y))
 
+d <- rbind(dat, means)
+?rbind
+head(dat)
+head(means)
+head(d)
+ggplot() +
+  geom_point(data = dat,
+             aes(x = x, y = y)) +
+  geom_point(data = means,
+             aes(x = x, y = y),
+             color = 'red') +
+  geom_line(data = line,
+            aes(x = x, y = y)) +
+  geom_line(data = d,
+            aes(x = x, y = y, group = group))
 
+#
+# S04C21 - sum of squared residuals
+#
 
+head(means$y)
+head(dat$y)
+head(means$y - dat$y)
+head((means$y - dat$y)^2)
+sum((means$y - dat$y)^2)
 
+#
+# S04C22 - the least squares line
+#
 
+lm(y~x, data = dat)
+slope <- lm(y~x, data = dat)$coefficients[2]
+intercept <- lm(y~x, data = dat)$coefficients[1]
+slope
+intercept
 
+x <- c(57,78)
+y <- slope * x + intercept
+line <- data.frame(x, y)
+ggplot() +
+  geom_point(data = dat,
+             aes(x = x, y = y)) +
+  geom_point(data = means,
+             aes(x = x, y = y),
+             color = 'red') +
+  geom_line(data = line,
+            aes(x = x, y = y)) +
+  geom_line(data = d,
+            aes(x = x, y = y, group = group))
 
+x <- means$x
+y <- slope * x + intercept
+means <- data.frame(x, y, group)
+ggplot() +
+  geom_point(data = dat,
+             aes(x = x, y = y)) +
+  geom_point(data = means,
+             aes(x = x, y = y),
+             color = 'red') +
+  geom_line(data = line,
+            aes(x = x, y = y)) +
+  geom_line(data = d,
+            aes(x = x, y = y, group = group))
 
+d <- rbind(dat, means)
+ggplot() +
+  geom_point(data = dat,
+             aes(x = x, y = y)) +
+  geom_point(data = means,
+             aes(x = x, y = y),
+             color = 'red') +
+  geom_line(data = line,
+            aes(x = x, y = y)) +
+  geom_line(data = d,
+            aes(x = x, y = y, group = group))
 
+#
+# S04C23 - prediction
+#
 
+ggplot() +
+  geom_line(data = line,
+            aes(x = x, y = y))
 
+head(dat)
+tail(dat)
+lm(y~x, data = dat)
 
+y <- 0.5141 * 70 + 33.8866
+y
 
+#
+# S04C24 - reading in excel files
+#
 
+dat <- read.csv(file.choose())
+dat
+
+#---------#
+# THE END #
+#---------#
