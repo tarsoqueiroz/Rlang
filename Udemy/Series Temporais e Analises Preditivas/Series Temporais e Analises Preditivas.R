@@ -208,10 +208,281 @@ plot(aggregate(AirPassengers, FUN = mean))
 # S05C19 - Avaliando Resíduos
 #
 
+#
+# S05C20 - Avaliando Resíduos no R
+#
 
+library(forecast)
+library(ggplot2)
 
+autoplot(presidents)
+prev <- auto.arima(presidents)
 
+print(prev$residuals)
+autoplot(prev$residuals)
+hist(prev$residuals)
+var(prev$residuals, na.rm = T)
+mean(as.vector(prev$residuals), na.rm = T)
 
+acf(prev$residuals, na.action = na.pass)
+
+checkresiduals(prev)
+
+shapiro.test(prev$residuals)
+
+#
+# S05C21 - Teste de Estacionariedade no R
+#
+
+library(urca)
+library(forecast)
+
+x <- ur.kpss(AirPassengers)
+print(x)
+
+z <- diff(AirPassengers)
+x <- ur.kpss(z)
+print(x)
+
+ndiffs(AirPassengers)
+
+split.screen(figs = c(2,1))
+screen(1)
+plot(AirPassengers)
+screen(2)
+plot(z)
+
+#
+# S05C22 - Decomposição
+#
+
+#
+# S05C23 - Transformações
+#
+
+#
+# S05C24 - Transformações no R
+#
+
+library(forecast)
+library(ggplot2)
+
+t1 <- BoxCox(AirPassengers, lambda = 0)
+autoplot(t1)
+
+t2 <- BoxCox(AirPassengers, lambda = 0.1)
+autoplot(t2)
+
+lbd <- BoxCox.lambda(AirPassengers)
+print(lbd)
+t3 <- BoxCox(AirPassengers, lambda = lbd)
+autoplot(t3)
+
+t4 <- diff(AirPassenger)
+autoplot(t4)
+
+t5 <- log10(AirPassengers)
+autoplot(t5)
+
+split.screen(figs = c(2,2))
+screen(1)
+plot(t1)
+screen(2)
+plot(t2)
+screen(3)
+plot(t3)
+screen(4)
+plot(t5)
+close.screen(all = T)
+
+#
+# S05C25 - Médias Móveis
+#
+
+#
+# S05C26 - Médias Móveis no R
+#
+
+library(forecast)
+library(ggplot2)
+
+autoplot(fdeaths)
+
+fdeaths2 = ma(fdeaths, order = 5)
+autoplot(fdeaths2)
+
+fdeaths3 = ma(fdeaths, order = 12)
+autoplot(fdeaths3)
+
+fdeaths4 <- tsclean(fdeaths)
+autoplot(fdeaths4)
+
+plot(fdeaths)
+lines(fdeaths2, col = 'red')
+lines(fdeaths3, col = 'blue')
+lines(fdeaths4, col = 'green')
+
+legend('topright', 
+       legend = c('Original', 'MA5', 'Ma12', 'Tsc'),
+       col = c('black', 'red', 'blue', 'green'),
+       lty = 1:2,
+       cex = 0.8)
+
+#
+# S05C27 - Enquanto isso no Hotel Y Estrelas (PTII)
+#
+
+#
+# Questionário 3
+#
+
+# P1: São pressupostos e recomendações para os resíduos de um modelo de previsão de 
+#     séries temporais. Marque a opção falsa.
+# R1: Autocorrelacionados
+
+# P2: Qual opção abaixo é uma forma recomendada de avaliar se os resíduos de um modelo 
+#     estão normalmente distribuídos?
+# R2: Executar um teste de hipótese
+
+# P3: Observe os dois gráficos abaixo. Trata-se da mesma serie temporal, porém, o segundo
+#     gráfico foi transformado.
+#     Marque a opção que indica a mais provável forma de transformação que o gráfico sofreu.
+# R3: O componente sazonal foi removido
+
+# P4: Analise atentamente os  gráficos abaixo.
+#     O primeiro gráfico teve aplicado uma transformação por média móvel.
+#     Qual é a mais provável ordem desta transformação?
+# R4: 24
+
+# P5: Assinale a alternativa falsa:
+# R5: Médias móveis separam o componente sazonal da tendência
+
+#
+# S06C28 - Considerações Gerais sobre Previsões
+#
+
+#
+# S06C29 - Resumo de Técnicas
+#
+
+#
+# S06C30 - Naive
+#
+
+#
+# S06C31 - Naive com R
+#
+
+library(forecast)
+library(ggplot2)
+
+set.seed(4312)
+x <- cumsum(sample(c(-1, 1), 100, T))
+print(x)
+serie <- ts(x, start = c(1900), end = c(2000), frequency = 1)
+print(serie)
+autoplot(serie)
+
+prev <- naive(serie, h = 5)
+class(prev)
+print(prev)
+print(prev$fitted)
+print(prev$residuals)
+autoplot(prev)
+
+prev2 <- naive(serie, h = 5, level = c(95, 99))
+print(prev2)
+autoplot(prev2)
+
+split.screen(figs = c(2,1))
+screen(1)
+plot(prev)
+screen(2)
+plot(prev2)
+close.screen(all = T)
+
+autoplot(AirPassengers)
+prev3 <- snaive(AirPassengers, h = 12)
+print(prev3)
+autoplot(prev3)
+
+prev3$mean
+window(AirPassengers, start = c(1960))
+
+#
+# S06C32 - Mean
+#
+
+# Meanf
+
+#
+# S06C33 - Mean com R
+#
+
+library(forecast)
+library(ggplot2)
+
+autoplot(fdeaths)
+mean(fdeaths)
+
+prev = meanf(fdeaths, h = 5)
+print(prev)
+autoplot(prev)
+
+fdeaths2 <- window(fdeaths, start = c(1976, 1), end = c(1979, 12))
+autoplot(fdeaths2)
+mean(fdeaths2)
+prev2 <- meanf(fdeaths2, h = 5)
+print(prev2)
+autoplot(prev2)
+
+plot(prev)
+lines(prev2$mean, col = 'red')
+
+#
+# S06C34 - Drift
+#
+
+#
+# S06C35 - Drift com R
+#
+
+library(forecast)
+library(ggplot2)
+
+autoplot(austres)
+
+prev <- rwf(austres, h = 12, drift = F)
+autoplot(prev)
+
+prev <- rwf(austres, h = 12, drift = T)
+autoplot(prev)
+
+print(prev)
+
+#
+# Questionário 4
+#
+
+# P1: As linhas verde, azul e vermelha, são três diferentes técnicas de previsão aplicados 
+#     na série temporal abaixo.
+#     Informa a opção que indica corretamente as técnicas utilizadas, considerando a ordem 
+#     das cores citadas na linha acima.
+# R1: Drift, Naive e Mean
+
+# P2: Qual das premissas sobre previsões abaixo é falsa?
+# R2: Uma previsão que gera apenas pontos de previsão é melhor do que uma que também gera
+#     intervalos de previsão
+
+# P3: 
+# R3: 
+
+# P4: 
+# R4: 
+
+#
+# S07C36 - Previsão com Decomposição no R
+#
 
 
 
