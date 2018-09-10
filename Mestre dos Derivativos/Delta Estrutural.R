@@ -257,7 +257,7 @@ ggplot(dfDelta, aes(Stock, Delta))+
 #
 # Malha de Ratio
 #
-dfDelta <- data.frame(Stock=seq(15, 30, by=0.01))
+dfDelta <- data.frame(Stock=seq(15, 37, by=0.01))
 dfDelta <- data.frame(dfDelta, 
                       DeltaRT15m21=(callBuy (dfDelta$Stock, 18) + 
                                     callSell(dfDelta$Stock, 21) * 2 +
@@ -281,6 +281,42 @@ ggplot(dfDelta, aes(x=Stock))+
   ylim(c( 0,  7)) +
   labs(title="Malha de Ratio",
        subtitle="Miolos em 21, 22 e 23",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
+#
+# Malha de Ratio 15 e 20
+#
+dfDelta <- data.frame(Stock=seq(15, 40, by=0.01))
+dfDelta <- data.frame(dfDelta, 
+                      DeltaRT15m21=(callBuy (dfDelta$Stock, 18) + 
+                                    callSell(dfDelta$Stock, 21) * 2 +
+                                    callBuy (dfDelta$Stock, 22)), 
+                      DeltaRT15m22=(callBuy (dfDelta$Stock, 19) + 
+                                    callSell(dfDelta$Stock, 22) * 2 +
+                                    callBuy (dfDelta$Stock, 23)), 
+                      DeltaRT15m23=(callBuy (dfDelta$Stock, 20) + 
+                                    callSell(dfDelta$Stock, 23) * 2 +
+                                    callBuy (dfDelta$Stock, 24)), 
+                      DeltaRT20m25=(callBuy (dfDelta$Stock, 21) + 
+                                    callSell(dfDelta$Stock, 25) * 2 +
+                                    callBuy (dfDelta$Stock, 27)))
+dfDelta <- data.frame(dfDelta, 
+                      DeltaMalhaRT21222325=(dfDelta$DeltaRT15m21+
+                                            dfDelta$DeltaRT15m22+
+                                            dfDelta$DeltaRT15m23+
+                                            dfDelta$DeltaRT20m25))
+ggplot(dfDelta, aes(x=Stock))+
+  geom_line(aes(y=DeltaRT15m21,         colour='RT15 miolo 21')) +
+  geom_line(aes(y=DeltaRT15m22,         colour='RT15 miolo 22')) +
+  geom_line(aes(y=DeltaRT15m23,         colour='RT15 miolo 23')) +
+  geom_line(aes(y=DeltaRT20m25,         colour='RT20 miolo 25')) + 
+  geom_line(aes(y=DeltaMalhaRT21222325, colour='Malha'), size = 2) +
+  xlim(c(15, 40)) +
+  ylim(c( 0,  7)) +
+  labs(title="Malha de Ratio 15 e 20",
+       subtitle="Miolos 15% em 21, 22 e 23, e 20% em 25 ",
        x="Valor da Ação",
        y="Delta Estrutural",
        caption="Sala do Mestre dos Derivativos")
