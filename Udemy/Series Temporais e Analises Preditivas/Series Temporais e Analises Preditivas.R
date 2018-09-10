@@ -42,6 +42,7 @@ install.packages('lmtest')
 install.packages('seasonal')
 install.packages('openxlsx') #
 install.packages('seasonalview') # 
+library(forecast)
 library(ggplot2)
 library(urca)
 library(lmtest)
@@ -474,22 +475,148 @@ print(prev)
 # R2: Uma previsão que gera apenas pontos de previsão é melhor do que uma que também gera
 #     intervalos de previsão
 
-# P3: 
-# R3: 
-
-# P4: 
-# R4: 
-
 #
 # S07C36 - Previsão com Decomposição no R
 #
 
+library(forecast)
+library(ggplot2)
 
+autoplot(AirPassengers)
+previ <- stlf(AirPassengers, h = 48)
+print(previ)
+autoplot(previ)
 
+#
+# S07C37 - Suavização Exponencial
+#
 
+#
+# S07C38 - Suavização Exponencial no R
+#
 
+library(forecast)
+library(ggplot2)
 
+autoplot(austres)
+mdl1 <- holt(austres, h = 16)
+autoplot(mdl1)
 
+mdl1$model
+
+mdl2 <- holt(austres, h = 16, alpha = 0.2)
+autoplot(mdl2)
+
+plot(mdl1)
+lines(mdl2$mean, col = 'red')
+
+mdl3 <- holt(austres, damped = T, phi = 0.9, h = 16)
+autoplot(mdl3)
+
+mdl4 <- holt(austres, damped = T, phi = 0.8, h = 16)
+autoplot(mdl4)
+
+plot(mdl3)
+lines(mdl4$mean, col = 'red')
+
+print(mdl3$mean)
+print(mdl4$mean)
+
+#
+# S07C39 - Suavização Exponencial no R parte II
+#
+
+mdl5 <- hw(JohnsonJohnson, seasonal = 'additive', h = 16)
+autoplot(mdl5)
+
+mdl6 <- hw(JohnsonJohnson, seasonal = 'multiplicative', h = 16)
+autoplot(mdl6)
+
+plot(mdl5)
+lines(mdl6$mean, col = 'red')
+
+print(mdl5$mean)
+print(mdl6$mean)
+
+mdl7 <- hw(JohnsonJohnson, seasonal = 'multiplicative', damped = T, phi = 0.9, h = 16)
+autoplot(mdl7)
+
+mdl8 <- ets(JohnsonJohnson)
+print(mdl8)
+
+prev <- forecast(mdl8, h = 16, levels = c(85, 90))
+autoplot(prev)
+
+print(prev$mean)
+autoplot(mdl8$residuals)
+autoplot(mdl8$fitted)
+
+autoplot(decompose(JohnsonJohnson))
+
+mdl9 <- ets(JohnsonJohnson, model = 'ZAA', damped = T)
+print(mdl9)
+
+mdl10 <- ets(JohnsonJohnson, model = 'ZZZ', damped = T)
+print(mdl10)
+
+#
+# S07C40 - Arima
+#
+
+#
+# S07C41 - Auto-arima 
+#
+
+#
+# S07C42 - Auto-arima no R 
+#
+
+library(forecast)
+library(ggplot2)
+
+modelo <- auto.arima(co2, trace = T) # Best model: ARIMA(1,1,1)(1,1,2)[12]
+print(modelo)                        # AIC=180.78   AICc=180.97   BIC=205.5
+
+modelo2 <- auto.arima(co2, trace = T, stepwise = F, approximation = F)
+                                     # Best model: ARIMA(0,1,3)(0,1,1)[12]
+print(modelo2)                       # AIC=176.86   AICc=177   BIC=197.47
+
+#
+# S07C43 - Auto-arima no R parte II 
+#
+
+prev1 <- forecast(modelo, h = 12)
+autoplot(prev1)
+
+prev2 <- forecast(modelo2, h = 12)
+autoplot(prev2)
+
+print(prev1$mean)
+print(prev2$mean)
+
+plot(prev1)
+lines(prev2$mean, col = 'red')
+
+#
+# S07C44 - Enbquanto isso no Hotel Y Estrelas (PTIII) 
+#
+
+#
+# Questionário 5
+#
+
+# P1: Qual opção abaixo é o principio básico da suavização exponencial?
+# R1: Observações mais recentes possuem maior peso
+
+# P2: Observando a imagem abaixo, qual técnica de previsão foi utilizada?
+# R2: Arima
+
+# P3: Para uma variação sazonal constante, qual modelo de Holt-Winters 
+#     devemos utilizar em uma previsão de séries temporais?
+# R3: Aditivo
+
+# P4: No modelo arima(P,D,Q), qual elemento representa a letra P?
+# R4: Parte autoagressiva sazonal
 
 
 
