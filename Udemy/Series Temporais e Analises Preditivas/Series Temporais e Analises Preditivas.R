@@ -598,7 +598,7 @@ plot(prev1)
 lines(prev2$mean, col = 'red')
 
 #
-# S07C44 - Enbquanto isso no Hotel Y Estrelas (PTIII) 
+# S07C44 - Enquanto isso no Hotel Y Estrelas (PTIII) 
 #
 
 #
@@ -618,8 +618,294 @@ lines(prev2$mean, col = 'red')
 # P4: No modelo arima(P,D,Q), qual elemento representa a letra P?
 # R4: Parte autoagressiva sazonal
 
+#
+# S08C45 - Regressão com séries temporais
+#
 
+# lm - Linear model, (variável dependente) ~ (variáveis independentes)
+# tslm - Pack Forecast
 
+#
+# S08C46 - Escolhendo as variáveis independentes
+#
+
+# CV *, AIC *, AICC, BIC - Menor melhor (* prioridade para estes)
+# AdjR2                  - Maior melhor
+
+#
+# S08C47 - Regressão com séries temporais no R
+#
+
+library(forecast)
+library(ggplot2)
+
+plot(Seatbelts)
+
+x1 <- tslm(DriversKilled ~ trend, data = Seatbelts)
+x2 <- tslm(DriversKilled ~ season, data = Seatbelts)
+x3 <- tslm(DriversKilled ~ trend + season, data = Seatbelts)
+CV(x1)
+CV(x2)
+CV(x3)
+
+r1 <- forecast(x1, h = 12)
+r2 <- forecast(x2, h = 12)
+r3 <- forecast(x3, h = 12)
+
+autoplot(r1)
+autoplot(r2)
+autoplot(r3)
+
+plot(r1)
+lines(r2$mean, col = 'red')
+lines(r3$mean, col = 'green')
+legend('topright', 
+       legend = c('Tend', 'Seas', 'Tend + Seas'), 
+       col = c('blue', 'red', 'green'), lty = 1:2, cex = 0.8)
+
+#
+# S09C48 - Redes Neurais para Séries Temporais
+#
+
+# NNAR - apenas previsão pontual
+
+#
+# S09C49 - Redes Neurais para Séries Temporais no R
+#
+
+library(forecast)
+library(ggplot2)
+
+modelo <- nnetar(co2)
+print(modelo)
+
+prev <- forecast(modelo, h = 24)
+
+autoplot(prev)
+
+#
+# S09C50 - Incluindo uma variável independente
+#
+
+# No forecast via parm XREG
+
+#
+# S09C51 - Incluindo uma variável independente no R
+#
+
+library(forecast)
+library(ggplot2)
+
+plot(Seatbelts)
+
+autoplot(Seatbelts[, c('DriversKilled')])
+
+cintos <- window(Seatbelts[, c('DriversKilled')], start = c(1980, 1), end = c(1983, 12))
+print(cintos)
+
+modelo1 <- auto.arima(cintos)
+print(modelo1)
+
+prev1 <- forecast(modelo1, h = 12)
+autoplot(prev1)
+
+motoristas <- as.vector(window(Seatbelts[, c('drivers')], start = c(1980, 1), end = c(1983, 12)))
+print(motoristas)
+
+modelo2 <- auto.arima(cintos, xreg = motoristas)
+print(modelo2)
+
+motoristas2 <- as.vector(window(Seatbelts[, c('drivers')], start = c(1984, 1), end = c(1984, 12)))
+prev2 <- forecast(modelo2, xreg = motoristas2)
+print(prev2)
+autoplot(prev2)
+
+plot(prev1)
+lines(prev2$mean, col = 'red')
+
+#
+# S10C52 - Métricas de Desempenho
+#
+
+# Separar dados treinar e testar
+
+#
+# S10C53 - Métricas de Desempenho no R
+#
+
+library(forecast)
+library(ggplot2)
+
+treino <- window(fdeaths, start = c(1974,1), end = c(1977,12))
+teste  <- window(fdeaths, start = c(1978,1), end = c(1979,12))
+
+modelo1 <- tslm(treino ~ season + trend, data = treino)
+prev1   <- forecast(modelo1, h = 24)
+autoplot(prev1)
+
+modelo2 <- nnetar(treino)
+prev2   <- forecast(modelo2, h = 24)
+autoplot(prev2)
+
+plot(fdeaths)
+lines(prev1$mean, col = 'blue')
+lines(prev2$mean, col = 'red')
+lines(teste,      col = 'green')
+legend('topright', 
+       legend = c('Reg', 'Rn', 'Teste'), 
+       col = c('blue', 'red', 'green'), 
+       lty = 1:2, cex = 0.8)
+
+accuracy(prev1, teste)
+accuracy(prev2, teste)
+
+#
+# S10C54 - Métricas: ME MAE RMSE MPE MAPE
+#
+
+library(forecast)
+
+previsto  <- c(3.34, 4.18, 3, 2.99, 4.51, 5.18, 8.18)
+realizado <- c(3,    4,    3, 3,    4.5,  4,    4.5)
+
+diferenca <- realizado - previsto
+me        <- sum(diferenca) / length(diferenca)
+difabs    <- abs(realizado - previsto)
+mae       <- sum(difabs) / length(difabs)
+difaoquad <- (realizado - previsto)^2
+rmse      <- sqrt(sum(difaoquad) / length(difaoquad))
+erroperc  <- ((realizado - previsto) / realizado) * 100
+mpe       <- sum(erroperc) / length(erroperc)
+erroabs   <- (abs(realizado - previsto) / realizado) * 100
+mape      <- sum(erroabs) / length(erroabs)
+
+metricas  <- data.frame(mycalc = c(me, rmse, mae, mpe, mape), accuracy = temp[1,])
+
+#
+# Questionário 6
+#
+
+# P1: Com relação a fórmula de Regressão Linear para séries temporais abaixo:
+#        Jobs  ~ trend + season
+#     Marque a opção verdadeira:
+# R1: Jobs é a variável dependente, trend e season as variáveis explanatórias
+
+# P2: Podemos criar previsões para séries temporais de várias formas. A maneira mais usual e
+#     encontrar um padrão na série e extrapolar este padrão para o futuro. O pacote forecast
+#     permite que se inclua uma variável explanatória em um modelo através de um parâmetro 
+#     específico. Que parâmetro é este?
+# R2: xreg
+
+# P3: Qual afirmação abaixo é verdadeira sobre MAE (mean absolute erro )?
+# R3: É uma métrica dependente de escala
+
+#
+# S11C55 - Caso Prático no R
+#
+
+library(forecast)
+library(ggplot2)
+library(seasonal)
+library(seasonalview)
+library(urca)
+
+dados <- read.csv(file.choose(), header = F)
+print(dados) # 12 meses em 15 anos = 180 linhas
+
+ocupacao <- ts(dados, start = c(2003, 1), end = c(2017, 12), frequency = 12)
+summary(ocupacao)
+
+autoplot(ocupacao)
+hist(ocupacao)
+boxplot(ocupacao)
+
+dec <- decompose(ocupacao)
+autoplot(dec)
+
+autoplot(dec$trend)
+
+autoplot(window(dec$trend, start = c(2015, 9)))
+# inicio de tendência de alta
+
+ggseasonplot(ocupacao)
+# maior ocupacao em julho e agosto
+
+ggseasonplot(window(ocupacao, start = c(2016)))
+
+#
+# S11C56 - Caso Prático no R parte II
+#
+
+est <- ur.kpss(ocupacao)
+print(est)
+# dúvida se são estacionários
+
+ndiffs(ocupacao)
+# são estacionários
+
+tsdisplay(ocupacao)
+# vários pontos de autocorrelação
+
+modelo <- auto.arima(ocupacao, trace = T, stepwise = F, approximation = F)
+print(modelo)
+
+checkresiduals(modelo)
+# aparenta estar distribuído normalmente
+
+shapiro.test(modelo$residuals)
+# p-value alto ---> dados normalmente distribuídos
+var(modelo$residuals)
+mean(modelo$residuals)
+# modelo eficiente para previsão
+
+previsao <- forecast(modelo, h = 24)
+print(previsao)
+autoplot(previsao)
+
+#
+# S11C57 - Caso Prático no R parte III
+#
+
+ocupacaotreino <- ts(dados, start = c(2003, 1), end = c(2015, 12), frequency = 12)
+ocupacaoteste  <- ts(dados, start = c(2016, 1), end = c(2017, 12), frequency = 12)
+
+modeloarima <- auto.arima(ocupacaotreino, trace = T, stepwise = F, approximation = F)
+preverarima <- forecast(modeloarima, h = 24)
+
+modeloets <- ets(ocupacaotreino)
+preverets <- forecast(modeloets, h = 24)
+
+plot(preverarima)
+lines(preverets$mean, col = 'red')
+
+accuracy(preverarima, ocupacaoteste)
+accuracy(preverets,   ocupacaoteste)
+
+plot(ocupacao)
+lines(preverarima$mean, col = 'blue')
+lines(preverets$mean,   col = 'green')
+
+#
+# S12C58 - De volta ao Hotel Y Estrelas
+#
+
+#
+# S12C59 - Atividade Final
+#
+
+# Analise a série temporal nottem (presente no R core)
+# 
+# História dos dados
+# Analise exploratórias inclusive com gráficos
+# Teste a estacionaridade
+# Previsões com modelos de suavização exponencial, arima e redes neurais autoregressivas
+# Avalie performance dos modelos
+
+#
+# S12C60 - Encerramento
+#
+
+# CRAN Task View: Time Series Analysis
 
 
 
