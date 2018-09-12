@@ -320,3 +320,34 @@ ggplot(dfDelta, aes(x=Stock))+
        x="Valor da Ação",
        y="Delta Estrutural",
        caption="Sala do Mestre dos Derivativos")
+
+#
+# Stradle Coberto
+#
+lStock <- seq(15, 21, by=0.01)
+lDelta <- (putSell (lStock, 18) + 
+             callSell(lStock, 18) +
+             callBuy (lStock, 19))
+dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
+ggplot(dfDelta, aes(Stock, Delta))+
+  geom_line()
+
+#
+# Strangle Coberto
+#
+lStock <- seq(15, 21, by=0.01)
+lDelta <- (callSell(lStock, 17) + 
+           putSell (lStock, 19) +
+           callBuy (lStock, 19))
+dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
+ggplot(dfDelta, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(15, 21)) +
+  ylim(c(-5,  0)) +
+  labs(title="Strangle Coberto",
+       subtitle="-C[17]+P[19]+C[19]",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
+
