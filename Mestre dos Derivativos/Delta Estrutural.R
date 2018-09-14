@@ -199,6 +199,31 @@ ggplot(dfIronCondor, aes(Stock, Delta))+
   geom_line()
 
 #
+# Butterfly
+#
+lStock <- seq(18, 22, by=0.01)
+lBB    <- (callBuy (lStock, 19) + 
+            callSell(lStock, 20) * 2 +
+            callBuy (lStock, 21)) - 0.00
+plot(x = lStock,
+     y = lBB, 
+     type = 'l', 
+     main = "Structural Delta of Butterfly",
+     xlab = "Value of Stock",
+     ylab = "Delta")
+
+dfBB <- data.frame(Stock=lStock, Delta=lBB)
+ggplot(dfBB, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(18, 22)) +
+  ylim(c(-0.5, 1.5)) +
+  labs(title="Butterfly",
+       subtitle="Miolo 20 e Asas 19 e 21",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
+#
 # Iron Butterfly
 #
 lStock <- seq(13, 17, by=0.01)
@@ -336,14 +361,14 @@ ggplot(dfDelta, aes(Stock, Delta))+
 # Strangle Coberto
 #
 lStock <- seq(15, 21, by=0.01)
-lDelta <- (callSell(lStock, 17) + 
-           putSell (lStock, 19) +
-           callBuy (lStock, 19))
+lDelta <- (callSell(lStock, 16) + 
+           putSell (lStock, 20) +
+           callBuy (lStock, 20))
 dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
 ggplot(dfDelta, aes(Stock, Delta))+
   geom_line() +
   xlim(c(15, 21)) +
-  ylim(c(-5,  0)) +
+  ylim(c(-6,  -3)) +
   labs(title="Strangle Coberto",
        subtitle="-C[17]+P[19]+C[19]",
        x="Valor da Ação",

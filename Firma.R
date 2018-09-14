@@ -129,3 +129,15 @@ c
 r <- c^2
 r
 ?cor
+
+#
+# 
+#
+library(ggplot2)
+
+x <- 1:(9 * 22)
+data <- sample(x, replace = T)
+tsdata <- ts(data, start = c(2018,1,1), end = c(2018,10,30), frequency = 22)
+plot(tsdata)
+head(tsdata)
+
