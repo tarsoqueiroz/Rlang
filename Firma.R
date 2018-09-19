@@ -141,3 +141,38 @@ tsdata <- ts(data, start = c(2018,1,1), end = c(2018,10,30), frequency = 22)
 plot(tsdata)
 head(tsdata)
 
+#
+# Lei de Benford
+#
+
+log(1+ 1 /2, base = 10)
+log(1+ 1 /11, base = 10)
+
+seq <- 1:9
+seq
+log(1+ 1 /seq, base = 10)
+
+plot(log(1+ 1 /(1:9), base = 10))
+plot(log(1+ 1 /(1:99), base = 10))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
