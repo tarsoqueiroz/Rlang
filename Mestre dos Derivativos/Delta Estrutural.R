@@ -375,4 +375,21 @@ ggplot(dfDelta, aes(Stock, Delta))+
        y="Delta Estrutural",
        caption="Sala do Mestre dos Derivativos")
 
+#
+# BB Nemo
+#
+lStock <- seq(20, 35, by=0.01)
+lDelta <- (callBuy (lStock, 30) + 
+           callSell(lStock, 28) *2 +
+           callBuy (lStock, 25))
+dfDelta <- data.frame(Stock=lStock, Delta=lDelta)
+ggplot(dfDelta, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(20, 35)) +
+  ylim(c(-0,  3)) +
+  labs(title="BB Nemo",
+       subtitle="C[25]-2xC[27]+C[30]",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
 
