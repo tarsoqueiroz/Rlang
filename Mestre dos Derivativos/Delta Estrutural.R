@@ -393,3 +393,76 @@ ggplot(dfDelta, aes(Stock, Delta))+
        y="Delta Estrutural",
        caption="Sala do Mestre dos Derivativos")
 
+#
+# THL/p
+#
+lStock <- seq(24, 29, by=0.01)
+lBB    <- (putBuy (lStock, 25) + 
+           putSell(lStock, 25)) - 0.00
+plot(x = lStock,
+     y = lBB, 
+     type = 'l', 
+     main = "Delta Estrutural da THL",
+     xlab = "Ação",
+     ylab = "Delta")
+
+dfBB <- data.frame(Stock=lStock, Delta=lBB)
+ggplot(dfBB, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(24, 29)) +
+  ylim(c(-0.0, 1.5)) +
+  labs(title="THL",
+       subtitle="Longa no 25 e curta no 25",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
+#
+# Fly
+#
+lStock <- seq(24, 29, by=0.01)
+lBB    <- (putBuy (lStock, 25) + 
+             putSell(lStock, 26.5) * 2 +
+             putBuy (lStock, 28)) - 0.00
+plot(x = lStock,
+     y = lBB, 
+     type = 'l', 
+     main = "Delta Estrutural da Fly",
+     xlab = "Ação",
+     ylab = "Delta")
+
+dfBB <- data.frame(Stock=lStock, Delta=lBB)
+ggplot(dfBB, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(24, 29)) +
+  ylim(c(-0.0, 1.5)) +
+  labs(title="Fly",
+       subtitle="Miolo 26.50 e Asas 25 e 28",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
+#
+# Equivalencia
+#
+lStock <- seq(10, 25, by=0.01)
+lLote  <- (putBuy (lStock, 21.41) + 
+           putSell(lStock, 24.25) * 0.7) - 0.00
+plot(x = lStock,
+     y = lLote, 
+     type = 'l', 
+     main = "Delta Estrutural de Equivalência",
+     xlab = "Ação",
+     ylab = "Delta")
+
+dfBB <- data.frame(Stock=lStock, Delta=lLote)
+ggplot(dfBB, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(10, 25)) +
+  ylim(c(-2.0, 2.0)) +
+  labs(title="Delta Estrutural de Equivalência",
+       subtitle="+PETRX220 -0,7PETRN25",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
