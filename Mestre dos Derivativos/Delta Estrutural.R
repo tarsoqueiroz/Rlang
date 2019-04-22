@@ -459,7 +459,7 @@ dfBB <- data.frame(Stock=lStock, Delta=lLote)
 ggplot(dfBB, aes(Stock, Delta))+
   geom_line() +
   xlim(c(10, 25)) +
-  ylim(c(-2.0, 2.0)) +
+  ylim(c(-2.0, 1.5)) +
   labs(title="Delta Estrutural de Equivalência",
        subtitle="+PETRX220 -0,7PETRN25",
        x="Valor da Ação",
@@ -487,6 +487,31 @@ ggplot(dfBB, aes(Stock, Delta))+
   geom_line() +
   xlim(c(18, 28)) +
   ylim(c(-0.0, 0.50)) +
+  labs(title="Delta Estrutural de Equivalência",
+       subtitle="+PETRX220 -0,7PETRN25",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
+#
+# CB
+#
+lStock <- seq(26, 33, by=0.01)
+lLote  <- (putSell(lStock, 27.50) * 1 + 
+           putBuy (lStock, 29.00) * 2 +
+           putSell(lStock, 31.00) * 1) - 0.00
+plot(x = lStock,
+     y = lLote, 
+     type = 'l', 
+     main = "Delta Estrutural de Equivalência",
+     xlab = "Ação",
+     ylab = "Delta")
+
+dfBB <- data.frame(Stock=lStock, Delta=lLote)
+ggplot(dfBB, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(26, 33)) +
+  ylim(c(-2.0, 2.00)) +
   labs(title="Delta Estrutural de Equivalência",
        subtitle="+PETRX220 -0,7PETRN25",
        x="Valor da Ação",
