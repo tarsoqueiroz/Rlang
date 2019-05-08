@@ -153,24 +153,21 @@ ggplot(dfRatio, aes(Stock, Delta))+
 
 
 
-lStock <- seq(17, 25, by=0.01)
+lStock <- seq(23, 28, by=0.01)
 
-lRatio15J21 <- (callBuy(lStock, 18) + callSell(lStock, 21) * 2 + callBuy(lStock, 22))
-lRatio15J22 <- (callBuy(lStock, 19) + callSell(lStock, 22) * 2 + callBuy(lStock, 23))
-lRatio15J23 <- (callBuy(lStock, 20) + callSell(lStock, 23) * 2 + callBuy(lStock, 24))
+lPetrX250 <- (3 * putBuy(lStock, 24.39) + 2 * putSell(lStock, 26.98))
+lPetrX280 <- (3 * putBuy(lStock, 27.39) + 3 * putSell(lStock, 26.98))
+lTHLp     <- (lPetrX250 + lPetrX280)
 
-lRatio15All <- (lRatio15J21 + lRatio15J22 + lRatio15J23)
+dfTHLp    <- data.frame(Stock  =lStock, 
+                      DeltaX250=lPetrX250, 
+                      DeltaX280=lPetrX280, 
+                      DeltaTHLp=lTHLp)
 
-dfRatio <- data.frame(Stock=lStock, 
-                      DeltaR15J21=lRatio15J21, 
-                      DeltaR15J22=lRatio15J22, 
-                      DeltaR15J23=lRatio15J23, 
-                      DeltaR15All=lRatio15All)
-ggplot(dfRatio, aes(Stock))+
-  geom_line(aes(y = DeltaR15J21, colour = 'RT15 miolo J21')) +
-  geom_line(aes(y = DeltaR15J22, colour = 'RT15 miolo J22')) +
-  geom_line(aes(y = DeltaR15J23, colour = 'RT15 miolo J23')) +
-  geom_line(aes(y = DeltaR15All, colour = 'Malha')) + 
+ggplot(dfTHLp, aes(Stock))+
+  geom_line(aes(y = DeltaX250, colour = 'THLp X250')) +
+  geom_line(aes(y = DeltaX280, colour = 'THLp X280')) +
+  geom_line(aes(y = DeltaTHLp, colour = 'THLp')) +
   theme(plot.title   = element_text(color="red",     size=18, face="bold"),
         axis.title.x = element_text(color="blue",    size=14, face="bold"),
         axis.title.y = element_text(color="blue",    size=14, face="bold")) +
