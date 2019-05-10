@@ -155,8 +155,8 @@ ggplot(dfRatio, aes(Stock, Delta))+
 
 lStock <- seq(23, 28, by=0.01)
 
-lPetrX250 <- (3 * putBuy(lStock, 24.39) + 2 * putSell(lStock, 26.98))
-lPetrX280 <- (3 * putBuy(lStock, 27.39) + 3 * putSell(lStock, 26.98))
+lPetrX250 <- (0 * putBuy(lStock, 24.39) + 0 * putSell(lStock, 26.98))
+lPetrX280 <- (5 * putBuy(lStock, 27.39) + 5 * putSell(lStock, 27.23))
 lTHLp     <- (lPetrX250 + lPetrX280)
 
 dfTHLp    <- data.frame(Stock  =lStock, 
