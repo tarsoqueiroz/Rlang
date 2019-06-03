@@ -201,10 +201,10 @@ ggplot(dfIronCondor, aes(Stock, Delta))+
 #
 # Butterfly
 #
-lStock <- seq(18, 22, by=0.01)
-lBB    <- (callBuy (lStock, 19) + 
-            callSell(lStock, 20) * 2 +
-            callBuy (lStock, 21)) - 0.00
+lStock <- seq(24, 28, by=0.01)
+lBB    <- (putBuy (lStock, 24.31) + 
+           putSell(lStock, 25.90) * 2 +
+           putBuy (lStock, 27.31)) - 0.00
 plot(x = lStock,
      y = lBB, 
      type = 'l', 
@@ -215,10 +215,10 @@ plot(x = lStock,
 dfBB <- data.frame(Stock=lStock, Delta=lBB)
 ggplot(dfBB, aes(Stock, Delta))+
   geom_line() +
-  xlim(c(18, 22)) +
-  ylim(c(-0.5, 1.5)) +
+  xlim(c(24, 28)) +
+  ylim(c(-0.25, 1.5)) +
   labs(title="Butterfly",
-       subtitle="Miolo 20 e Asas 19 e 21",
+       subtitle="Miolo 25.90 e Asas 24.31 e 27.31",
        x="Valor da Ação",
        y="Delta Estrutural",
        caption="Sala do Mestre dos Derivativos")
