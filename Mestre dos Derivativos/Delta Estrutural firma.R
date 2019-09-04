@@ -175,4 +175,30 @@ ggplot(dfTHLp, aes(Stock))+
        x = "Ação",
        y = "Delta",
        colour = "Estruturas")
-  
+
+#
+# Fly/p
+#
+lStock <- seq(22, 29, by=0.01)
+lLote  <- (putBuy (lStock, 24.14) * 3 + 
+           putBuy (lStock, 27.14) * 3 +
+             putSell(lStock, 24.77) * 3 +
+             putSell(lStock, 26.77) * 3) - 0.00
+plot(x = lStock,
+     y = lLote, 
+     type = 'l', 
+     main = "Delta Estrutural de Equivalência",
+     xlab = "Ação",
+     ylab = "Delta")
+
+dfBB <- data.frame(Stock=lStock, Delta=lLote)
+ggplot(dfBB, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(22, 29)) +
+  ylim(c(-1.0, 2.5)) +
+  labs(title="Delta Estrutural de Equivalência",
+       subtitle="+PETRX220 -0,7PETRN25",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
