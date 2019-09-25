@@ -466,15 +466,38 @@ ggplot(dfBB, aes(Stock, Delta))+
        y="Delta Estrutural",
        caption="Sala do Mestre dos Derivativos")
 
-
 #
 # THL/p
 #
 lStock <- seq(15, 35, by=0.01)
+lLote  <- (callBuy (lStock, 27.06) * 1 + 
+           callSell(lStock, 27.02) * 1) - 0.00
+plot(x = lStock,
+     y = lLote, 
+     type = 'l', 
+     main = "Delta Estrutural de Equivalência",
+     xlab = "Ação",
+     ylab = "Delta THL")
+
+dfThl <- data.frame(Stock=lStock, Delta=lLote)
+ggplot(dfThl, aes(Stock, Delta))+
+  geom_line() +
+  xlim(c(18, 28)) +
+  ylim(c(-0.0, 0.50)) +
+  labs(title="Delta Estrutural de Equivalência",
+       subtitle="PETRH28-PETRJ279",
+       x="Valor da Ação",
+       y="Delta Estrutural",
+       caption="Sala do Mestre dos Derivativos")
+
+#
+# Box/p
+#
+lStock <- seq(15, 35, by=0.01)
 lLote  <- (putBuy (lStock, 24.21) * 3 + 
-           putBuy (lStock, 27.41) * 3 +
-           putSell(lStock, 27.25) * 3 +
-           putSell(lStock, 24.25) * 3) - 0.00
+             putBuy (lStock, 27.41) * 3 +
+             putSell(lStock, 27.25) * 3 +
+             putSell(lStock, 24.25) * 3) - 0.00
 plot(x = lStock,
      y = lLote, 
      type = 'l', 
