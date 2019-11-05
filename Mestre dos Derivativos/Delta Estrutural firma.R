@@ -179,11 +179,11 @@ ggplot(dfTHLp, aes(Stock))+
 #
 # Fly/p
 #
-lStock <- seq(22, 29, by=0.01)
-lLote  <- (putBuy (lStock, 24.14) * 3 + 
-           putBuy (lStock, 27.14) * 3 +
-             putSell(lStock, 24.77) * 3 +
-             putSell(lStock, 26.77) * 3) - 0.00
+lStock <- seq(22, 31, by=0.01)
+lLote  <- (putBuy (lStock, 24.14) *   1 + 
+           putBuy (lStock, 27.14) *   1 +
+           putSell(lStock, 28.98) * 0.7 * 2 +
+           putBuy (lStock, 29.98) * 0.7) - 0.00
 plot(x = lStock,
      y = lLote, 
      type = 'l', 
